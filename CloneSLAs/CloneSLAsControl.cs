@@ -19,6 +19,9 @@ namespace CloneSLAs
     {
         private Settings mySettings;
         private List<ListViewItem> _sourceElementsOfSLA = new List<ListViewItem>();
+        private List<Entity> _slas = new List<Entity>();
+        private List<Entity> _elementsOfsla = new List<Entity>();
+        private Entity _slaSelected = new Entity();
 
         public CloneSLAsControl()
         {
@@ -27,27 +30,21 @@ namespace CloneSLAs
 
         private void CloneSLAsControl_Load(object sender, EventArgs e)
         {
-            ShowInfoNotification("This is a notification that can lead to XrmToolBox repository", new Uri("https://github.com/MscrmTools/XrmToolBox"));
+            //ShowInfoNotification("This is a notification that can lead to XrmToolBox repository", new Uri("https://github.com/MscrmTools/XrmToolBox"));
 
             // Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
             {
                 mySettings = new Settings();
                 
-                LoadElementsOfSLAs();
+                ConfigureGridElementsOfSLAs();
+                ExecuteMethod(GetSLAs);
                 LogWarning("Settings not found => a new settings file has been created!");
             }
             else
             {
                 LogInfo("Settings found and loaded");
             }
-        }
-
-        private void tsbSample_Click(object sender, EventArgs e)
-        {
-            // The ExecuteMethod method handles connecting to an
-            // organization if XrmToolBox is not yet connected
-            ExecuteMethod(GetSLAs);
         }
 
         private void GetSLAs()
@@ -59,7 +56,7 @@ namespace CloneSLAs
                 {
                     args.Result = Service.RetrieveMultiple(new QueryExpression("sla")
                     {
-                        ColumnSet = new ColumnSet("name", "primaryentityotc", "description"),
+                        ColumnSet = new ColumnSet("name", "objecttypecode", "description", "statuscode", "statecode"),
                     });
                 },
                 PostWorkCallBack = (args) =>
@@ -71,7 +68,63 @@ namespace CloneSLAs
                     var result = args.Result as EntityCollection;
                     if (result != null)
                     {
-                        MessageBox.Show($"Found {result.Entities.Count} accounts");
+                        cb_SLAs.Items.Clear();
+                        cb_SLAs.DisplayMember = "Text";
+                        cb_SLAs.ValueMember = "Value";
+                        foreach (var entity in result.Entities)
+                        {
+                            _slas.Add(entity);
+                            cb_SLAs.Items.Add(new { Text = entity.GetAttributeValue<string>("name"), Value = entity.Id.ToString() } );
+                        }
+                        //MessageBox.Show($"Found {result.Entities.Count} accounts");
+                    }
+                }
+            });
+        }
+
+        private void GetElementsOfSLA()
+        {
+            WorkAsync(new WorkAsyncInfo
+            {
+                Message = "Getting Elements of SLA",
+                Work = (worker, args) =>
+                {
+                    args.Result = Service.RetrieveMultiple(new QueryExpression("slaitem")
+                    {
+                        ColumnSet = new ColumnSet(true),
+                    });
+                },
+                PostWorkCallBack = (args) =>
+                {
+                    if (args.Error != null)
+                    {
+                        MessageBox.Show(args.Error.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    var result = args.Result as EntityCollection;
+                    if (result != null)
+                    {
+                        _elementsOfsla.Clear();
+                        _sourceElementsOfSLA.Clear();                       
+
+                        foreach (var entity in result.Entities)
+                        {
+                            _elementsOfsla.Add(entity);
+                            _sourceElementsOfSLA.Add(new ListViewItem(new string[]
+                            {
+                               entity.GetAttributeValue<string>("name"),
+                               _slaSelected.GetAttributeValue<string>("name"),
+                               entity.GetAttributeValue<EntityReference>("msdyn_slakpiid").Name,
+                               entity.GetAttributeValue<int>("warnafter").ToString(),
+                               entity.GetAttributeValue<int>("failureafter").ToString(),
+                               _slaSelected.FormattedValues["statuscode"],
+                               _slaSelected.FormattedValues["statecode"]
+                            }));
+                        }
+
+                        lv_ElementsOfSLA.Items.Clear();
+                        lv_ElementsOfSLA.Items.AddRange(_sourceElementsOfSLA.ToArray());
+
+                        lb_TotalItems.Text += " : " + result.Entities.Count.ToString();
                     }
                 }
             });
@@ -82,8 +135,11 @@ namespace CloneSLAs
 
         }
 
-        private void LoadElementsOfSLAs()
+        private void ConfigureGridElementsOfSLAs()
         {
+            // Crear datos ficticios  
+            _sourceElementsOfSLA = new List<ListViewItem>();
+
             lv_ElementsOfSLA.Columns.Clear();
             lv_ElementsOfSLA.Columns.Add("Name", 150);
             lv_ElementsOfSLA.Columns.Add("SLA", 80);
@@ -92,36 +148,6 @@ namespace CloneSLAs
             lv_ElementsOfSLA.Columns.Add("Error after", 100);
             lv_ElementsOfSLA.Columns.Add("Status (SLA)", 100);
             lv_ElementsOfSLA.Columns.Add("Reason for state (SLA)", 100);
-            PopulateFakeData();
-
-            lb_TotalItems.Text += " : " + lv_ElementsOfSLA.Items.Count.ToString();
-        }
-
-        // Generar un array de líneas ficticias con las columnas definidas en lv_ElementsOfSLA  
-        private void PopulateFakeData()
-        {
-            _sourceElementsOfSLA.Clear();
-
-            // Crear datos ficticios  
-            _sourceElementsOfSLA = new List<ListViewItem>();
-
-            for (int i = 1; i <= 250; i++)
-            {
-                _sourceElementsOfSLA.Add(new ListViewItem(new string[]
-                {
-                   $"Task {i}",
-                   $"SLA {i}",
-                   $"KPI {i}",
-                   $"{i}h",
-                   $"{i * 2}h",
-                   i % 2 == 0 ? "Active" : "Inactive",
-                   i % 3 == 0 ? "No issues" : i % 3 == 1 ? "Delayed" : "On track"
-                }));
-            };
-
-            // Actualizar el control ListView  
-            lv_ElementsOfSLA.Items.Clear();
-            lv_ElementsOfSLA.Items.AddRange(_sourceElementsOfSLA.ToArray());
         }
 
         private int GetVScrollBarWidth()
@@ -151,6 +177,24 @@ namespace CloneSLAs
             {
                 mySettings.LastUsedOrganizationWebappUrl = detail.WebApplicationUrl;
                 LogInfo("Connection has changed to: {0}", detail.WebApplicationUrl);
+            }
+        }
+
+        private void cb_SLAs_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (cb_SLAs.SelectedItem != null)
+            {
+                var selectedSLA = cb_SLAs.SelectedItem;
+                var selectedSLAId = ((dynamic)selectedSLA).Value;
+                var selectedSLAName = ((dynamic)selectedSLA).Text;
+                _slaSelected = _slas.FirstOrDefault(s => s.Id.ToString() == selectedSLAId);
+                if(_slaSelected != null)
+                {
+                    tb_MainEntity.Text = _slaSelected.FormattedValues["objecttypecode"].ToString();
+                    tb_Description.Text = _slaSelected.GetAttributeValue<string>("description");
+
+                    ExecuteMethod(GetElementsOfSLA);
+                }
             }
         }
     }

@@ -31,19 +31,19 @@
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.gb_SLAs = new System.Windows.Forms.GroupBox();
-            this.gb_ElementsFromSLASelected = new System.Windows.Forms.GroupBox();
-            this.cb_SLAs = new System.Windows.Forms.ComboBox();
-            this.lb_MainEntity = new System.Windows.Forms.Label();
-            this.tb_MainEntity = new System.Windows.Forms.TextBox();
-            this.lb_Description = new System.Windows.Forms.Label();
             this.tb_Description = new System.Windows.Forms.TextBox();
+            this.lb_Description = new System.Windows.Forms.Label();
+            this.tb_MainEntity = new System.Windows.Forms.TextBox();
+            this.lb_MainEntity = new System.Windows.Forms.Label();
+            this.cb_SLAs = new System.Windows.Forms.ComboBox();
+            this.gb_ElementsFromSLASelected = new System.Windows.Forms.GroupBox();
             this.lv_ElementsOfSLA = new System.Windows.Forms.ListView();
             this.p_SLAs = new System.Windows.Forms.Panel();
             this.p_ElementsOfSLA = new System.Windows.Forms.Panel();
             this.p_control = new System.Windows.Forms.Panel();
-            this.p_FooterLeft = new System.Windows.Forms.Panel();
             this.p_FooterRight = new System.Windows.Forms.Panel();
             this.lb_TotalItems = new System.Windows.Forms.Label();
+            this.p_FooterLeft = new System.Windows.Forms.Panel();
             this.lb_Status = new System.Windows.Forms.Label();
             this.toolStripMenu.SuspendLayout();
             this.gb_SLAs.SuspendLayout();
@@ -51,8 +51,8 @@
             this.p_SLAs.SuspendLayout();
             this.p_ElementsOfSLA.SuspendLayout();
             this.p_control.SuspendLayout();
-            this.p_FooterLeft.SuspendLayout();
             this.p_FooterRight.SuspendLayout();
+            this.p_FooterLeft.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMenu
@@ -85,6 +85,54 @@
             this.gb_SLAs.TabStop = false;
             this.gb_SLAs.Text = "SLAs";
             // 
+            // tb_Description
+            // 
+            this.tb_Description.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_Description.Location = new System.Drawing.Point(9, 111);
+            this.tb_Description.Multiline = true;
+            this.tb_Description.Name = "tb_Description";
+            this.tb_Description.Size = new System.Drawing.Size(336, 54);
+            this.tb_Description.TabIndex = 4;
+            // 
+            // lb_Description
+            // 
+            this.lb_Description.AutoSize = true;
+            this.lb_Description.Location = new System.Drawing.Point(6, 95);
+            this.lb_Description.Name = "lb_Description";
+            this.lb_Description.Size = new System.Drawing.Size(60, 13);
+            this.lb_Description.TabIndex = 3;
+            this.lb_Description.Text = "Description";
+            // 
+            // tb_MainEntity
+            // 
+            this.tb_MainEntity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_MainEntity.Location = new System.Drawing.Point(9, 64);
+            this.tb_MainEntity.Name = "tb_MainEntity";
+            this.tb_MainEntity.Size = new System.Drawing.Size(336, 20);
+            this.tb_MainEntity.TabIndex = 2;
+            // 
+            // lb_MainEntity
+            // 
+            this.lb_MainEntity.AutoSize = true;
+            this.lb_MainEntity.Location = new System.Drawing.Point(6, 48);
+            this.lb_MainEntity.Name = "lb_MainEntity";
+            this.lb_MainEntity.Size = new System.Drawing.Size(58, 13);
+            this.lb_MainEntity.TabIndex = 1;
+            this.lb_MainEntity.Text = "Main entity";
+            // 
+            // cb_SLAs
+            // 
+            this.cb_SLAs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cb_SLAs.FormattingEnabled = true;
+            this.cb_SLAs.Location = new System.Drawing.Point(9, 19);
+            this.cb_SLAs.Name = "cb_SLAs";
+            this.cb_SLAs.Size = new System.Drawing.Size(336, 21);
+            this.cb_SLAs.TabIndex = 0;
+            this.cb_SLAs.SelectedValueChanged += new System.EventHandler(this.cb_SLAs_SelectedValueChanged);
+            // 
             // gb_ElementsFromSLASelected
             // 
             this.gb_ElementsFromSLASelected.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -97,53 +145,6 @@
             this.gb_ElementsFromSLASelected.TabIndex = 6;
             this.gb_ElementsFromSLASelected.TabStop = false;
             this.gb_ElementsFromSLASelected.Text = "Elements of SLA";
-            // 
-            // cb_SLAs
-            // 
-            this.cb_SLAs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cb_SLAs.FormattingEnabled = true;
-            this.cb_SLAs.Location = new System.Drawing.Point(9, 19);
-            this.cb_SLAs.Name = "cb_SLAs";
-            this.cb_SLAs.Size = new System.Drawing.Size(336, 21);
-            this.cb_SLAs.TabIndex = 0;
-            // 
-            // lb_MainEntity
-            // 
-            this.lb_MainEntity.AutoSize = true;
-            this.lb_MainEntity.Location = new System.Drawing.Point(6, 48);
-            this.lb_MainEntity.Name = "lb_MainEntity";
-            this.lb_MainEntity.Size = new System.Drawing.Size(58, 13);
-            this.lb_MainEntity.TabIndex = 1;
-            this.lb_MainEntity.Text = "Main entity";
-            // 
-            // tb_MainEntity
-            // 
-            this.tb_MainEntity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_MainEntity.Location = new System.Drawing.Point(9, 64);
-            this.tb_MainEntity.Name = "tb_MainEntity";
-            this.tb_MainEntity.Size = new System.Drawing.Size(336, 20);
-            this.tb_MainEntity.TabIndex = 2;
-            // 
-            // lb_Description
-            // 
-            this.lb_Description.AutoSize = true;
-            this.lb_Description.Location = new System.Drawing.Point(6, 95);
-            this.lb_Description.Name = "lb_Description";
-            this.lb_Description.Size = new System.Drawing.Size(60, 13);
-            this.lb_Description.TabIndex = 3;
-            this.lb_Description.Text = "Description";
-            // 
-            // tb_Description
-            // 
-            this.tb_Description.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_Description.Location = new System.Drawing.Point(9, 111);
-            this.tb_Description.Multiline = true;
-            this.tb_Description.Name = "tb_Description";
-            this.tb_Description.Size = new System.Drawing.Size(336, 54);
-            this.tb_Description.TabIndex = 4;
             // 
             // lv_ElementsOfSLA
             // 
@@ -192,15 +193,6 @@
             this.p_control.Size = new System.Drawing.Size(817, 223);
             this.p_control.TabIndex = 9;
             // 
-            // p_FooterLeft
-            // 
-            this.p_FooterLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.p_FooterLeft.Controls.Add(this.lb_Status);
-            this.p_FooterLeft.Location = new System.Drawing.Point(3, 191);
-            this.p_FooterLeft.Name = "p_FooterLeft";
-            this.p_FooterLeft.Size = new System.Drawing.Size(354, 29);
-            this.p_FooterLeft.TabIndex = 9;
-            // 
             // p_FooterRight
             // 
             this.p_FooterRight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -220,6 +212,15 @@
             this.lb_TotalItems.Size = new System.Drawing.Size(111, 13);
             this.lb_TotalItems.TabIndex = 0;
             this.lb_TotalItems.Text = "Total elements of SLA";
+            // 
+            // p_FooterLeft
+            // 
+            this.p_FooterLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.p_FooterLeft.Controls.Add(this.lb_Status);
+            this.p_FooterLeft.Location = new System.Drawing.Point(3, 191);
+            this.p_FooterLeft.Name = "p_FooterLeft";
+            this.p_FooterLeft.Size = new System.Drawing.Size(354, 29);
+            this.p_FooterLeft.TabIndex = 9;
             // 
             // lb_Status
             // 
@@ -249,10 +250,10 @@
             this.p_SLAs.ResumeLayout(false);
             this.p_ElementsOfSLA.ResumeLayout(false);
             this.p_control.ResumeLayout(false);
-            this.p_FooterLeft.ResumeLayout(false);
-            this.p_FooterLeft.PerformLayout();
             this.p_FooterRight.ResumeLayout(false);
             this.p_FooterRight.PerformLayout();
+            this.p_FooterLeft.ResumeLayout(false);
+            this.p_FooterLeft.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
