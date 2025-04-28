@@ -151,14 +151,21 @@
             this.lv_ElementsOfSLA.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.lv_ElementsOfSLA.CheckBoxes = true;
             this.lv_ElementsOfSLA.FullRowSelect = true;
             this.lv_ElementsOfSLA.HideSelection = false;
             this.lv_ElementsOfSLA.Location = new System.Drawing.Point(7, 20);
             this.lv_ElementsOfSLA.Name = "lv_ElementsOfSLA";
+            this.lv_ElementsOfSLA.OwnerDraw = true;
             this.lv_ElementsOfSLA.Size = new System.Drawing.Size(435, 148);
             this.lv_ElementsOfSLA.TabIndex = 0;
             this.lv_ElementsOfSLA.UseCompatibleStateImageBehavior = false;
             this.lv_ElementsOfSLA.View = System.Windows.Forms.View.Details;
+            this.lv_ElementsOfSLA.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.llv_ElementsOfSLA_DrawColumnHeader);
+            this.lv_ElementsOfSLA.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.lv_ElementsOfSLA_DrawSubItem);
+            this.lv_ElementsOfSLA.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lv_ElementsOfSLA_ItemChecked);
+            this.lv_ElementsOfSLA.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lv_ElementsOfSLA_ItemSelectionChanged);
+            this.lv_ElementsOfSLA.MouseMove += new System.Windows.Forms.MouseEventHandler(this.llv_ElementsOfSLA_MouseMove);
             // 
             // p_SLAs
             // 

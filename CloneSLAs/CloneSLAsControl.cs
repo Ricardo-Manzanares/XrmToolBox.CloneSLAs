@@ -11,6 +11,7 @@ using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using XrmToolBox.Extensibility;
 
 namespace CloneSLAs
@@ -123,7 +124,7 @@ namespace CloneSLAs
 
                         lv_ElementsOfSLA.Items.Clear();
                         lv_ElementsOfSLA.Items.AddRange(_sourceElementsOfSLA.ToArray());
-
+                        lv_ElementsOfSLA.Items.Cast<ListViewItem>().All(k => k.Checked = false);
                         lb_TotalItems.Text += " : " + result.Entities.Count.ToString();
                     }
                 }
@@ -195,6 +196,85 @@ namespace CloneSLAs
 
                     ExecuteMethod(GetElementsOfSLA);
                 }
+            }
+        }
+
+        private void llv_ElementsOfSLA_MouseMove(object sender, MouseEventArgs e)
+        {
+            ListViewItem item = lv_ElementsOfSLA.GetItemAt(e.X, e.Y);
+            if (item != null)
+            {
+                lv_ElementsOfSLA.Cursor = Cursors.Hand;
+            }
+            else
+            {
+                lv_ElementsOfSLA.Cursor = Cursors.Default;
+            }
+        }
+
+        private void lv_ElementsOfSLA_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            ListView item = (ListView)sender;
+            if(item != null && item.Items[e.ItemIndex] != null && item.Items[e.ItemIndex].Selected)
+            {
+                item.Items[e.ItemIndex].Checked = true;
+            }
+        }
+
+        private void lv_ElementsOfSLA_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            ListViewItem item = (ListViewItem)e.Item;
+            if (item != null)
+            {
+                item.Selected = item.Checked;
+            }
+        }
+
+        private void llv_ElementsOfSLA_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
+        {
+            e.DrawDefault = true;
+        }
+
+        private void lv_ElementsOfSLA_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+            if (e.Item.Selected)
+            {
+                e.Graphics.FillRectangle(Brushes.White, e.Bounds);
+
+                // Flags corregidos
+                TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix | TextFormatFlags.GlyphOverhangPadding | TextFormatFlags.PreserveGraphicsClipping;
+                int leftPadding = 6;
+
+                // Luego dibujamos el texto desplazado
+                Rectangle textBounds = new Rectangle(
+                    e.Bounds.X + leftPadding, // después del checkbox
+                    e.Bounds.Y,
+                    e.Bounds.Width - (leftPadding),
+                    e.Bounds.Height);
+
+                if (e.ColumnIndex == 0 && lv_ElementsOfSLA.CheckBoxes)
+                {
+                    leftPadding -= 2;
+
+                    Rectangle adjustedBounds = new Rectangle(e.Bounds.X + leftPadding, e.Bounds.Y + 2, e.Bounds.Width - leftPadding, e.Bounds.Height);
+
+                    CheckBoxState state = e.Item.Checked ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal;
+                    CheckBoxRenderer.DrawCheckBox(e.Graphics, adjustedBounds.Location, state);
+
+                    textBounds.X += 16;
+                    textBounds.Width -= 16;
+
+                    TextRenderer.DrawText(e.Graphics, e.SubItem.Text, lv_ElementsOfSLA.Font, textBounds, Color.Black, flags);
+                }
+                else
+                {
+                    // Otras columnas normales
+                    TextRenderer.DrawText(e.Graphics, e.SubItem.Text, lv_ElementsOfSLA.Font, textBounds, Color.Black, flags);
+                }
+            }
+            else
+            {
+                e.DrawDefault = true;
             }
         }
     }
