@@ -333,5 +333,18 @@ namespace CloneSLAs
                 Prepare();
             }
         }
+
+        private void btn_CreateSLA_Click(object sender, EventArgs e)
+        {
+            CreateSLA formCreateSLA = new CreateSLA();
+            var result = formCreateSLA.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                var test = "";
+                var newNameSLA = formCreateSLA.NewName;
+                var newMainEntitySLA = formCreateSLA.NewMainEntity;
+                var newDescriptionSLA = formCreateSLA.NewDescription;
+            }            
+        }
     }
 }

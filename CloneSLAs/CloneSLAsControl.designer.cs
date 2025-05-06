@@ -63,6 +63,18 @@
             this.l_environmentSource = new System.Windows.Forms.Label();
             this.l_environmentTargetValue = new System.Windows.Forms.Label();
             this.bt_SelectTarget = new System.Windows.Forms.Button();
+            this.lb_btnCreateSLA = new System.Windows.Forms.Label();
+            this.lb_btnCopyElementsOfSLA = new System.Windows.Forms.Label();
+            this.lb_btnAttachElementsOfSLA = new System.Windows.Forms.Label();
+            this.lb_btnCopySLA = new System.Windows.Forms.Label();
+            this.p_CreateSLA = new System.Windows.Forms.Panel();
+            this.p_CopySLA = new System.Windows.Forms.Panel();
+            this.p_CopyElements = new System.Windows.Forms.Panel();
+            this.p_AttacthElements = new System.Windows.Forms.Panel();
+            this.btn_AttachElementsOfSLA = new System.Windows.Forms.Button();
+            this.btn_CopyElementsOfSLA = new System.Windows.Forms.Button();
+            this.btn_CopySLA = new System.Windows.Forms.Button();
+            this.btn_CreateSLA = new System.Windows.Forms.Button();
             this.toolStripMenu.SuspendLayout();
             this.gb_SLAsSource.SuspendLayout();
             this.gb_ElementsFromSLASelected_Source.SuspendLayout();
@@ -76,8 +88,13 @@
             this.p_FooterRight.SuspendLayout();
             this.p_FooterLeft.SuspendLayout();
             this.p_settings.SuspendLayout();
+            this.gb_settings.SuspendLayout();
             this.gb_environments.SuspendLayout();
             this.p_environmentSources.SuspendLayout();
+            this.p_CreateSLA.SuspendLayout();
+            this.p_CopySLA.SuspendLayout();
+            this.p_CopyElements.SuspendLayout();
+            this.p_AttacthElements.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMenu
@@ -390,6 +407,10 @@
             // 
             this.gb_settings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gb_settings.Controls.Add(this.p_AttacthElements);
+            this.gb_settings.Controls.Add(this.p_CopyElements);
+            this.gb_settings.Controls.Add(this.p_CopySLA);
+            this.gb_settings.Controls.Add(this.p_CreateSLA);
             this.gb_settings.Location = new System.Drawing.Point(366, 3);
             this.gb_settings.Margin = new System.Windows.Forms.Padding(0);
             this.gb_settings.Name = "gb_settings";
@@ -464,6 +485,123 @@
             this.bt_SelectTarget.UseVisualStyleBackColor = true;
             this.bt_SelectTarget.Click += new System.EventHandler(this.bt_SelectTarget_Click);
             // 
+            // lb_btnCreateSLA
+            // 
+            this.lb_btnCreateSLA.AutoSize = true;
+            this.lb_btnCreateSLA.Location = new System.Drawing.Point(1, 43);
+            this.lb_btnCreateSLA.Name = "lb_btnCreateSLA";
+            this.lb_btnCreateSLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.lb_btnCreateSLA.Size = new System.Drawing.Size(64, 13);
+            this.lb_btnCreateSLA.TabIndex = 8;
+            this.lb_btnCreateSLA.Text = "Create SLA";
+            // 
+            // lb_btnCopyElementsOfSLA
+            // 
+            this.lb_btnCopyElementsOfSLA.AutoSize = true;
+            this.lb_btnCopyElementsOfSLA.Location = new System.Drawing.Point(2, 43);
+            this.lb_btnCopyElementsOfSLA.Name = "lb_btnCopyElementsOfSLA";
+            this.lb_btnCopyElementsOfSLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.lb_btnCopyElementsOfSLA.Size = new System.Drawing.Size(80, 13);
+            this.lb_btnCopyElementsOfSLA.TabIndex = 10;
+            this.lb_btnCopyElementsOfSLA.Text = "Copy Elements";
+            // 
+            // lb_btnAttachElementsOfSLA
+            // 
+            this.lb_btnAttachElementsOfSLA.AutoSize = true;
+            this.lb_btnAttachElementsOfSLA.Location = new System.Drawing.Point(3, 43);
+            this.lb_btnAttachElementsOfSLA.Name = "lb_btnAttachElementsOfSLA";
+            this.lb_btnAttachElementsOfSLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.lb_btnAttachElementsOfSLA.Size = new System.Drawing.Size(90, 13);
+            this.lb_btnAttachElementsOfSLA.TabIndex = 12;
+            this.lb_btnAttachElementsOfSLA.Text = "Attacth Elements";
+            // 
+            // lb_btnCopySLA
+            // 
+            this.lb_btnCopySLA.AutoSize = true;
+            this.lb_btnCopySLA.Location = new System.Drawing.Point(5, 43);
+            this.lb_btnCopySLA.Name = "lb_btnCopySLA";
+            this.lb_btnCopySLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.lb_btnCopySLA.Size = new System.Drawing.Size(57, 13);
+            this.lb_btnCopySLA.TabIndex = 14;
+            this.lb_btnCopySLA.Text = "Copy SLA";
+            // 
+            // p_CreateSLA
+            // 
+            this.p_CreateSLA.Controls.Add(this.btn_CreateSLA);
+            this.p_CreateSLA.Controls.Add(this.lb_btnCreateSLA);
+            this.p_CreateSLA.Location = new System.Drawing.Point(6, 12);
+            this.p_CreateSLA.Name = "p_CreateSLA";
+            this.p_CreateSLA.Size = new System.Drawing.Size(69, 59);
+            this.p_CreateSLA.TabIndex = 15;
+            // 
+            // p_CopySLA
+            // 
+            this.p_CopySLA.Controls.Add(this.btn_CopySLA);
+            this.p_CopySLA.Controls.Add(this.lb_btnCopySLA);
+            this.p_CopySLA.Location = new System.Drawing.Point(105, 12);
+            this.p_CopySLA.Name = "p_CopySLA";
+            this.p_CopySLA.Size = new System.Drawing.Size(69, 59);
+            this.p_CopySLA.TabIndex = 16;
+            // 
+            // p_CopyElements
+            // 
+            this.p_CopyElements.Controls.Add(this.btn_CopyElementsOfSLA);
+            this.p_CopyElements.Controls.Add(this.lb_btnCopyElementsOfSLA);
+            this.p_CopyElements.Location = new System.Drawing.Point(205, 12);
+            this.p_CopyElements.Name = "p_CopyElements";
+            this.p_CopyElements.Size = new System.Drawing.Size(87, 59);
+            this.p_CopyElements.TabIndex = 17;
+            // 
+            // p_AttacthElements
+            // 
+            this.p_AttacthElements.Controls.Add(this.btn_AttachElementsOfSLA);
+            this.p_AttacthElements.Controls.Add(this.lb_btnAttachElementsOfSLA);
+            this.p_AttacthElements.Location = new System.Drawing.Point(322, 12);
+            this.p_AttacthElements.Name = "p_AttacthElements";
+            this.p_AttacthElements.Size = new System.Drawing.Size(98, 59);
+            this.p_AttacthElements.TabIndex = 18;
+            // 
+            // btn_AttachElementsOfSLA
+            // 
+            this.btn_AttachElementsOfSLA.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_AttachElementsOfSLA.Image = global::CloneSLAs.Properties.Resources.attach;
+            this.btn_AttachElementsOfSLA.Location = new System.Drawing.Point(26, 0);
+            this.btn_AttachElementsOfSLA.Name = "btn_AttachElementsOfSLA";
+            this.btn_AttachElementsOfSLA.Size = new System.Drawing.Size(40, 40);
+            this.btn_AttachElementsOfSLA.TabIndex = 11;
+            this.btn_AttachElementsOfSLA.UseVisualStyleBackColor = true;
+            // 
+            // btn_CopyElementsOfSLA
+            // 
+            this.btn_CopyElementsOfSLA.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_CopyElementsOfSLA.Image = global::CloneSLAs.Properties.Resources.copy;
+            this.btn_CopyElementsOfSLA.Location = new System.Drawing.Point(22, 0);
+            this.btn_CopyElementsOfSLA.Name = "btn_CopyElementsOfSLA";
+            this.btn_CopyElementsOfSLA.Size = new System.Drawing.Size(40, 40);
+            this.btn_CopyElementsOfSLA.TabIndex = 9;
+            this.btn_CopyElementsOfSLA.UseVisualStyleBackColor = true;
+            // 
+            // btn_CopySLA
+            // 
+            this.btn_CopySLA.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_CopySLA.Image = global::CloneSLAs.Properties.Resources.copy;
+            this.btn_CopySLA.Location = new System.Drawing.Point(14, 0);
+            this.btn_CopySLA.Name = "btn_CopySLA";
+            this.btn_CopySLA.Size = new System.Drawing.Size(40, 40);
+            this.btn_CopySLA.TabIndex = 13;
+            this.btn_CopySLA.UseVisualStyleBackColor = true;
+            // 
+            // btn_CreateSLA
+            // 
+            this.btn_CreateSLA.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_CreateSLA.Image = global::CloneSLAs.Properties.Resources.plus;
+            this.btn_CreateSLA.Location = new System.Drawing.Point(14, 0);
+            this.btn_CreateSLA.Name = "btn_CreateSLA";
+            this.btn_CreateSLA.Size = new System.Drawing.Size(40, 40);
+            this.btn_CreateSLA.TabIndex = 0;
+            this.btn_CreateSLA.UseVisualStyleBackColor = true;
+            this.btn_CreateSLA.Click += new System.EventHandler(this.btn_CreateSLA_Click);
+            // 
             // CloneSLAsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -493,9 +631,18 @@
             this.p_FooterLeft.ResumeLayout(false);
             this.p_FooterLeft.PerformLayout();
             this.p_settings.ResumeLayout(false);
+            this.gb_settings.ResumeLayout(false);
             this.gb_environments.ResumeLayout(false);
             this.p_environmentSources.ResumeLayout(false);
             this.p_environmentSources.PerformLayout();
+            this.p_CreateSLA.ResumeLayout(false);
+            this.p_CreateSLA.PerformLayout();
+            this.p_CopySLA.ResumeLayout(false);
+            this.p_CopySLA.PerformLayout();
+            this.p_CopyElements.ResumeLayout(false);
+            this.p_CopyElements.PerformLayout();
+            this.p_AttacthElements.ResumeLayout(false);
+            this.p_AttacthElements.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -537,5 +684,17 @@
         private System.Windows.Forms.Panel p_ElementsOfSLATarget;
         private System.Windows.Forms.GroupBox gb_ElementsFromSLASelected_Target;
         private System.Windows.Forms.ListView lv_ElementsOfSLA_Target;
+        private System.Windows.Forms.Button btn_CreateSLA;
+        private System.Windows.Forms.Label lb_btnCreateSLA;
+        private System.Windows.Forms.Label lb_btnCopyElementsOfSLA;
+        private System.Windows.Forms.Button btn_CopyElementsOfSLA;
+        private System.Windows.Forms.Label lb_btnAttachElementsOfSLA;
+        private System.Windows.Forms.Button btn_AttachElementsOfSLA;
+        private System.Windows.Forms.Label lb_btnCopySLA;
+        private System.Windows.Forms.Button btn_CopySLA;
+        private System.Windows.Forms.Panel p_AttacthElements;
+        private System.Windows.Forms.Panel p_CopyElements;
+        private System.Windows.Forms.Panel p_CopySLA;
+        private System.Windows.Forms.Panel p_CreateSLA;
     }
 }
