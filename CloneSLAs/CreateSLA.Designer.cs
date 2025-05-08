@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.gb_SLAsSource = new System.Windows.Forms.GroupBox();
+            this.tb_NewName = new System.Windows.Forms.TextBox();
+            this.lb_NewName = new System.Windows.Forms.Label();
             this.tb_NewDescription = new System.Windows.Forms.TextBox();
             this.lb_Description_Source = new System.Windows.Forms.Label();
             this.tb_NewMainEntity = new System.Windows.Forms.TextBox();
@@ -39,8 +41,6 @@
             this.p_CreateSLA = new System.Windows.Forms.Panel();
             this.btn_CreateSLA = new System.Windows.Forms.Button();
             this.lb_btnCreateSLA = new System.Windows.Forms.Label();
-            this.tb_NewName = new System.Windows.Forms.TextBox();
-            this.lb_NewName = new System.Windows.Forms.Label();
             this.gb_SLAsSource.SuspendLayout();
             this.p_CopySLA.SuspendLayout();
             this.p_CreateSLA.SuspendLayout();
@@ -60,6 +60,24 @@
             this.gb_SLAsSource.TabIndex = 6;
             this.gb_SLAsSource.TabStop = false;
             this.gb_SLAsSource.Text = "New SLA";
+            // 
+            // tb_NewName
+            // 
+            this.tb_NewName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_NewName.Location = new System.Drawing.Point(6, 32);
+            this.tb_NewName.Name = "tb_NewName";
+            this.tb_NewName.Size = new System.Drawing.Size(343, 20);
+            this.tb_NewName.TabIndex = 6;
+            // 
+            // lb_NewName
+            // 
+            this.lb_NewName.AutoSize = true;
+            this.lb_NewName.Location = new System.Drawing.Point(6, 16);
+            this.lb_NewName.Name = "lb_NewName";
+            this.lb_NewName.Size = new System.Drawing.Size(35, 13);
+            this.lb_NewName.TabIndex = 5;
+            this.lb_NewName.Text = "Name";
             // 
             // tb_NewDescription
             // 
@@ -157,24 +175,6 @@
             this.lb_btnCreateSLA.Size = new System.Drawing.Size(64, 13);
             this.lb_btnCreateSLA.TabIndex = 8;
             this.lb_btnCreateSLA.Text = "Create SLA";
-            // 
-            // tb_NewName
-            // 
-            this.tb_NewName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_NewName.Location = new System.Drawing.Point(6, 32);
-            this.tb_NewName.Name = "tb_NewName";
-            this.tb_NewName.Size = new System.Drawing.Size(343, 20);
-            this.tb_NewName.TabIndex = 6;
-            // 
-            // lb_NewName
-            // 
-            this.lb_NewName.AutoSize = true;
-            this.lb_NewName.Location = new System.Drawing.Point(6, 16);
-            this.lb_NewName.Name = "lb_NewName";
-            this.lb_NewName.Size = new System.Drawing.Size(35, 13);
-            this.lb_NewName.TabIndex = 5;
-            this.lb_NewName.Text = "Name";
             // 
             // CreateSLA
             // 

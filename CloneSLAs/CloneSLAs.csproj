@@ -204,13 +204,21 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\accept.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\cancel.png" />
-    <None Include="Resources\accept.png" />
-    <Content Include="Resources\attach.png" />
-    <Content Include="Resources\copy.png" />
-    <Content Include="Resources\plus.png" />
-    <Content Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\copy-multiple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plus.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

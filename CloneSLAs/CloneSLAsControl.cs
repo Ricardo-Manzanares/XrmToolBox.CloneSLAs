@@ -129,7 +129,7 @@ namespace CloneSLAs
                         lv_ElementsOfSLA_Source.Items.Clear();
                         lv_ElementsOfSLA_Source.Items.AddRange(_sourceElementsOfSLA.ToArray());
                         lv_ElementsOfSLA_Source.Items.Cast<ListViewItem>().All(k => k.Checked = false);
-                        lb_TotalItems.Text += " : " + result.Entities.Count.ToString();
+                        gb_ElementsFromSLASelected_Source.Text += " (" + result.Entities.Count.ToString() + ")";
                     }
                 }
             });
@@ -155,8 +155,9 @@ namespace CloneSLAs
             {
                 p_SLAsTarget.Visible = false;
                 p_ElementsOfSLATarget.Visible = false;
-                p_SLAsSource.Height = (this.ParentForm.Height - p_settings.Height - p_FooterLeft.Height) - 40;
-                p_ElementsOfSLASource.Height = (this.ParentForm.Height - p_settings.Height - p_FooterRight.Height) - 40;
+                int sizeHeight = (this.ParentForm.Height - p_settings.Height - p_Footer.Height) - 40;
+                p_SLAsSource.Height = sizeHeight;
+                p_ElementsOfSLASource.Height = (this.ParentForm.Height - p_settings.Height - p_Footer.Height) - 40;
             }
         }
 
