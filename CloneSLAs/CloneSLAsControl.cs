@@ -1,6 +1,8 @@
 ﻿using CloneSLAs.Model;
 using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ using System.Linq;
 using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Services.Description;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using XrmToolBox.Extensibility;
@@ -20,6 +23,8 @@ namespace CloneSLAs
 {
     public partial class CloneSLAsControl : MultipleConnectionsPluginControlBase
     {
+        const string titleItemsOfSLASourceSelected = "Items of SLA source selected";
+
         private Settings mySettings;
         private IOrganizationService _targetService;
         private ConnectionDetail _targetConnectionDetail;
@@ -27,7 +32,8 @@ namespace CloneSLAs
         private List<ListViewItem> _sourceItemsOfSLA = new List<ListViewItem>();
         private List<Entity> _slas = new List<Entity>();
         private List<Entity> _itemsOfsla_Source = new List<Entity>();
-        private Entity _slaSelected_Source = new Entity();
+        private Entity _slaSelected_Source = null;
+        private List<MainEntity> _mainEntitys = new List<MainEntity>();
 
         public CloneSLAsControl()
         {
@@ -45,6 +51,8 @@ namespace CloneSLAs
 
                 Prepare();
                 ExecuteMethod(GetSLAs_Source);
+                ExecuteMethod(GetMainEntitysAvaiable);
+
                 LogWarning("Settings not found => a new settings file has been created!");
                 //Prevent focus on the text box
                 tb_MainEntity_Source.GotFocus += (textBox, o) => { ((TextBox)textBox).Parent.Focus(); };
@@ -85,7 +93,6 @@ namespace CloneSLAs
                             _slas.Add(entity);
                             cb_SLAs_Source.Items.Add(new SLA() { Text = entity.GetAttributeValue<string>("name"), Value = entity.Id, MainEntity = entity.FormattedValues["objecttypecode"].ToString() } );
                         }
-                        //MessageBox.Show($"Found {result.Entities.Count} accounts");
                     }
                 }
             });
@@ -101,6 +108,17 @@ namespace CloneSLAs
                     args.Result = Service.RetrieveMultiple(new QueryExpression("slaitem")
                     {
                         ColumnSet = new ColumnSet(true),
+                        Criteria =
+                        {
+                            Conditions =
+                            {
+                                new ConditionExpression("slaid", ConditionOperator.Equal, _slaSelected_Source.Id)
+                            }
+                        },
+                        Orders =
+                        {
+                            new OrderExpression("name", OrderType.Descending)
+                        }
                     });
                 },
                 PostWorkCallBack = (args) =>
@@ -133,11 +151,52 @@ namespace CloneSLAs
                         lv_ElementsOfSLA_Source.Items.Clear();
                         lv_ElementsOfSLA_Source.Items.AddRange(_sourceItemsOfSLA.ToArray());
                         lv_ElementsOfSLA_Source.Items.Cast<ListViewItem>().All(k => k.Checked = false);
-                        gb_ElementsFromSLASelected_Source.Text += " (" + result.Entities.Count.ToString() + ")";
+                        gb_ElementsFromSLASelected_Source.Text = titleItemsOfSLASourceSelected + " (" + result.Entities.Count.ToString() + ")";
                     }
                 }
             });
         }
+
+        private void GetMainEntitysAvaiable()
+        {
+            WorkAsync(new WorkAsyncInfo
+            {
+                Message = "Getting Main Entities avaiable",
+                Work = (worker, args) =>
+                {
+                    var request = new RetrieveAllEntitiesRequest
+                    {
+                        EntityFilters = EntityFilters.Entity,
+                        RetrieveAsIfPublished = true
+                    };
+
+                    var response = (RetrieveAllEntitiesResponse)Service.Execute(request);
+
+                    args.Result = response.EntityMetadata
+                        .Where(e =>
+                            e.IsValidForAdvancedFind == true &&
+                            e.IsSLAEnabled == true
+                        ).ToList<EntityMetadata>();
+                },
+                PostWorkCallBack = (args) =>
+                {
+                    if (args.Error != null)
+                    {
+                        MessageBox.Show(args.Error.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    var result = args.Result as List<EntityMetadata>;
+                    if (result != null)
+                    {
+                        _mainEntitys = result.Select(item => new MainEntity
+                        {
+                            LogicalName = item.LogicalName,
+                            DisplayName = ((Microsoft.Xrm.Sdk.Label)item.DisplayName).UserLocalizedLabel.Label.ToString(),
+                        }).ToList();
+                    }
+                }
+            });
+        }
+
 
         private void PluginControl_Resize(object sender, EventArgs e)
         {
@@ -241,7 +300,16 @@ namespace CloneSLAs
                     tb_Description_Source.Text = _slaSelected_Source.GetAttributeValue<string>("description");
 
                     ExecuteMethod(GetElementsOfSLA_Source);
+                    btn_CopyElementsOfSLA.Enabled = true;
                 }
+                else
+                {
+                    btn_CopyElementsOfSLA.Enabled = false;
+                }
+            }
+            else
+            {
+                btn_CopyElementsOfSLA.Enabled = false;
             }
         }
 
@@ -325,12 +393,15 @@ namespace CloneSLAs
 
         private void btn_CreateSLA_Click(object sender, EventArgs e)
         {
-            CreateSLA formCreateSLA = new CreateSLA();
+            CreateSLA formCreateSLA = new CreateSLA();          
+            formCreateSLA.SetMainEntitys = _mainEntitys;
+            if(_slaSelected_Source != null)
+                formCreateSLA.MainEntitySelected = _mainEntitys.Where(k => k.DisplayName == _slaSelected_Source.FormattedValues["objecttypecode"].ToString()).FirstOrDefault();
             var result = formCreateSLA.ShowDialog();
             if (result == DialogResult.OK)
             {
                 var newNameSLA = formCreateSLA.NewName;
-                var newMainEntitySLA = formCreateSLA.NewMainEntity;
+                var newMainEntitySLA = formCreateSLA.MainEntitySelected;
                 var newDescriptionSLA = formCreateSLA.NewDescription;
             }            
         }
@@ -339,17 +410,23 @@ namespace CloneSLAs
         {
             CreateSLA formCreateSLA = new CreateSLA();
             formCreateSLA.CopySLA = true;
-            formCreateSLA.NewName = "Test SLA (copy)";
+            if (_slaSelected_Source != null)
+            {
+                formCreateSLA.NewName = _mainEntitys.Where(k => k.DisplayName == _slaSelected_Source.FormattedValues["objecttypecode"].ToString()).First().DisplayName + " (copy)";
+                formCreateSLA.MainEntitySelected = _mainEntitys.Where(k => k.DisplayName == _slaSelected_Source.FormattedValues["objecttypecode"].ToString()).FirstOrDefault();
+            }
+            
+            formCreateSLA.SetMainEntitys = _mainEntitys;
             var result = formCreateSLA.ShowDialog();
             if (result == DialogResult.OK)
             {
                 var newNameSLA = formCreateSLA.NewName;
-                var newMainEntitySLA = formCreateSLA.NewMainEntity;
+                var newMainEntitySLA = formCreateSLA.MainEntitySelected;
                 var newDescriptionSLA = formCreateSLA.NewDescription;
             }
         }
 
-        private void btn_CopyElementsOfSLA_Click(object sender, EventArgs e)
+        private void btn_CopyItemsOfSLA_Click(object sender, EventArgs e)
         {
             CopySLA formCopySLA = new CopySLA();
             formCopySLA.AddItemsToComboBox(cb_SLAs_Source.Items.Cast<SLA>().Where(k => k.Value != _slaSelected_Source.Id && k.MainEntity == _slaSelected_Source.FormattedValues["objecttypecode"].ToString()).ToList());

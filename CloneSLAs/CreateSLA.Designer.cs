@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             this.gb_NewSLA = new System.Windows.Forms.GroupBox();
+            this.cb_MainEntity = new System.Windows.Forms.ComboBox();
             this.tb_NewName = new System.Windows.Forms.TextBox();
             this.lb_NewName = new System.Windows.Forms.Label();
             this.tb_NewDescription = new System.Windows.Forms.TextBox();
             this.lb_Description_Source = new System.Windows.Forms.Label();
-            this.tb_NewMainEntity = new System.Windows.Forms.TextBox();
             this.lb_MainEntity = new System.Windows.Forms.Label();
             this.p_CopySLA = new System.Windows.Forms.Panel();
+            this.btn_Cancel = new System.Windows.Forms.Button();
             this.lb_btnCancelSLA = new System.Windows.Forms.Label();
             this.p_CreateSLA = new System.Windows.Forms.Panel();
-            this.lb_btnCreateSLA = new System.Windows.Forms.Label();
-            this.btn_Cancel = new System.Windows.Forms.Button();
             this.btn_CreateSLA = new System.Windows.Forms.Button();
+            this.lb_btnCreateSLA = new System.Windows.Forms.Label();
             this.gb_NewSLA.SuspendLayout();
             this.p_CopySLA.SuspendLayout();
             this.p_CreateSLA.SuspendLayout();
@@ -48,11 +48,11 @@
             // 
             // gb_NewSLA
             // 
+            this.gb_NewSLA.Controls.Add(this.cb_MainEntity);
             this.gb_NewSLA.Controls.Add(this.tb_NewName);
             this.gb_NewSLA.Controls.Add(this.lb_NewName);
             this.gb_NewSLA.Controls.Add(this.tb_NewDescription);
             this.gb_NewSLA.Controls.Add(this.lb_Description_Source);
-            this.gb_NewSLA.Controls.Add(this.tb_NewMainEntity);
             this.gb_NewSLA.Controls.Add(this.lb_MainEntity);
             this.gb_NewSLA.Location = new System.Drawing.Point(12, 12);
             this.gb_NewSLA.Name = "gb_NewSLA";
@@ -60,6 +60,16 @@
             this.gb_NewSLA.TabIndex = 6;
             this.gb_NewSLA.TabStop = false;
             this.gb_NewSLA.Text = "New SLA";
+            // 
+            // cb_MainEntity
+            // 
+            this.cb_MainEntity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_MainEntity.FormattingEnabled = true;
+            this.cb_MainEntity.Location = new System.Drawing.Point(6, 71);
+            this.cb_MainEntity.Name = "cb_MainEntity";
+            this.cb_MainEntity.Size = new System.Drawing.Size(343, 21);
+            this.cb_MainEntity.TabIndex = 19;
+            this.cb_MainEntity.SelectedValueChanged += new System.EventHandler(this.cb_MainEntity_SelectedValueChanged);
             // 
             // tb_NewName
             // 
@@ -98,15 +108,6 @@
             this.lb_Description_Source.TabIndex = 3;
             this.lb_Description_Source.Text = "Description";
             // 
-            // tb_NewMainEntity
-            // 
-            this.tb_NewMainEntity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_NewMainEntity.Location = new System.Drawing.Point(6, 71);
-            this.tb_NewMainEntity.Name = "tb_NewMainEntity";
-            this.tb_NewMainEntity.Size = new System.Drawing.Size(343, 20);
-            this.tb_NewMainEntity.TabIndex = 2;
-            // 
             // lb_MainEntity
             // 
             this.lb_MainEntity.AutoSize = true;
@@ -124,6 +125,17 @@
             this.p_CopySLA.Name = "p_CopySLA";
             this.p_CopySLA.Size = new System.Drawing.Size(69, 59);
             this.p_CopySLA.TabIndex = 18;
+            // 
+            // btn_Cancel
+            // 
+            this.btn_Cancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_Cancel.Image = global::CloneSLAs.Properties.Resources.cancel;
+            this.btn_Cancel.Location = new System.Drawing.Point(14, 0);
+            this.btn_Cancel.Name = "btn_Cancel";
+            this.btn_Cancel.Size = new System.Drawing.Size(40, 40);
+            this.btn_Cancel.TabIndex = 4;
+            this.btn_Cancel.UseVisualStyleBackColor = true;
+            this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);
             // 
             // lb_btnCancelSLA
             // 
@@ -144,27 +156,6 @@
             this.p_CreateSLA.Size = new System.Drawing.Size(69, 59);
             this.p_CreateSLA.TabIndex = 17;
             // 
-            // lb_btnCreateSLA
-            // 
-            this.lb_btnCreateSLA.AutoSize = true;
-            this.lb_btnCreateSLA.Location = new System.Drawing.Point(1, 43);
-            this.lb_btnCreateSLA.Name = "lb_btnCreateSLA";
-            this.lb_btnCreateSLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.lb_btnCreateSLA.Size = new System.Drawing.Size(64, 13);
-            this.lb_btnCreateSLA.TabIndex = 8;
-            this.lb_btnCreateSLA.Text = "Create SLA";
-            // 
-            // btn_Cancel
-            // 
-            this.btn_Cancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_Cancel.Image = global::CloneSLAs.Properties.Resources.cancel;
-            this.btn_Cancel.Location = new System.Drawing.Point(14, 0);
-            this.btn_Cancel.Name = "btn_Cancel";
-            this.btn_Cancel.Size = new System.Drawing.Size(40, 40);
-            this.btn_Cancel.TabIndex = 4;
-            this.btn_Cancel.UseVisualStyleBackColor = true;
-            this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);
-            // 
             // btn_CreateSLA
             // 
             this.btn_CreateSLA.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -175,6 +166,16 @@
             this.btn_CreateSLA.TabIndex = 3;
             this.btn_CreateSLA.UseVisualStyleBackColor = true;
             this.btn_CreateSLA.Click += new System.EventHandler(this.btn_CreateSLA_Click);
+            // 
+            // lb_btnCreateSLA
+            // 
+            this.lb_btnCreateSLA.AutoSize = true;
+            this.lb_btnCreateSLA.Location = new System.Drawing.Point(1, 43);
+            this.lb_btnCreateSLA.Name = "lb_btnCreateSLA";
+            this.lb_btnCreateSLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.lb_btnCreateSLA.Size = new System.Drawing.Size(64, 13);
+            this.lb_btnCreateSLA.TabIndex = 8;
+            this.lb_btnCreateSLA.Text = "Create SLA";
             // 
             // CreateSLA
             // 
@@ -208,7 +209,6 @@
         private System.Windows.Forms.GroupBox gb_NewSLA;
         private System.Windows.Forms.TextBox tb_NewDescription;
         private System.Windows.Forms.Label lb_Description_Source;
-        private System.Windows.Forms.TextBox tb_NewMainEntity;
         private System.Windows.Forms.Label lb_MainEntity;
         private System.Windows.Forms.Panel p_CopySLA;
         private System.Windows.Forms.Button btn_Cancel;
@@ -218,5 +218,6 @@
         private System.Windows.Forms.Label lb_btnCreateSLA;
         private System.Windows.Forms.TextBox tb_NewName;
         private System.Windows.Forms.Label lb_NewName;
+        private System.Windows.Forms.ComboBox cb_MainEntity;
     }
 }

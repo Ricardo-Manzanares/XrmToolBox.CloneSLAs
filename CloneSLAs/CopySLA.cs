@@ -20,22 +20,6 @@ namespace CloneSLAs
             InitializeComponent();
         }
 
-        private void CopySLA_Load(object sender, EventArgs e)
-        {
-            /*DataTable dt = new DataTable();
-            dt.Columns.AddRange(new DataColumn[] {
-                    new DataColumn("Text", typeof(string)),
-                    new DataColumn("Value", typeof(string)) });
-            dt.Rows.Add("A", Guid.NewGuid());
-            dt.Rows.Add("B", Guid.NewGuid());
-            dt.Rows.Add("CASH", Guid.NewGuid());
-            dt.Rows.Add("X", Guid.NewGuid());
-            cb_SLATarget.DataSource = dt;
-            cb_SLATarget.DisplayMember = "Text";
-            cb_SLATarget.ValueMember = "Value";
-            cb_SLATarget.SelectedIndex = -1;*/
-        }
-
         public Guid GetSLATargetSelected
         {
             get { return SLATargetSelected; }

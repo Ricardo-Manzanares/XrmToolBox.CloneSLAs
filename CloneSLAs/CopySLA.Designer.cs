@@ -147,7 +147,6 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Copy SLA";
-            this.Load += new System.EventHandler(this.CopySLA_Load);
             this.p_CopySLA.ResumeLayout(false);
             this.p_CopySLA.PerformLayout();
             this.p_CreateSLA.ResumeLayout(false);

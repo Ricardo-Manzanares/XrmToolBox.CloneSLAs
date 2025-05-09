@@ -164,6 +164,7 @@
             // 
             this.cb_SLAs_Source.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.cb_SLAs_Source.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_SLAs_Source.FormattingEnabled = true;
             this.cb_SLAs_Source.Location = new System.Drawing.Point(9, 19);
             this.cb_SLAs_Source.Name = "cb_SLAs_Source";
@@ -341,6 +342,7 @@
             // 
             this.cb_SLAs_Target.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.cb_SLAs_Target.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_SLAs_Target.FormattingEnabled = true;
             this.cb_SLAs_Target.Location = new System.Drawing.Point(9, 19);
             this.cb_SLAs_Target.Name = "cb_SLAs_Target";
@@ -411,7 +413,7 @@
             this.btn_CopyElementsOfSLA.Size = new System.Drawing.Size(40, 40);
             this.btn_CopyElementsOfSLA.TabIndex = 9;
             this.btn_CopyElementsOfSLA.UseVisualStyleBackColor = true;
-            this.btn_CopyElementsOfSLA.Click += new System.EventHandler(this.btn_CopyElementsOfSLA_Click);
+            this.btn_CopyElementsOfSLA.Click += new System.EventHandler(this.btn_CopyItemsOfSLA_Click);
             // 
             // lb_btnCopyElementsOfSLA
             // 
