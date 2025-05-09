@@ -35,7 +35,7 @@
             this.lb_Description_Source = new System.Windows.Forms.Label();
             this.tb_MainEntity_Source = new System.Windows.Forms.TextBox();
             this.lb_MainEntity_Source = new System.Windows.Forms.Label();
-            this.cb_SLAsSource = new System.Windows.Forms.ComboBox();
+            this.cb_SLAs_Source = new System.Windows.Forms.ComboBox();
             this.gb_ElementsFromSLASelected_Source = new System.Windows.Forms.GroupBox();
             this.lv_ElementsOfSLA_Source = new System.Windows.Forms.ListView();
             this.p_SLAsSource = new System.Windows.Forms.Panel();
@@ -46,11 +46,11 @@
             this.lv_ElementsOfSLA_Target = new System.Windows.Forms.ListView();
             this.p_SLAsTarget = new System.Windows.Forms.Panel();
             this.gb_SLAsTarget = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tb_Description_Target = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tb_MainEntity_Target = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cb_SLAs_Target = new System.Windows.Forms.ComboBox();
             this.p_Footer = new System.Windows.Forms.Panel();
             this.lb_Status = new System.Windows.Forms.Label();
             this.p_settings = new System.Windows.Forms.Panel();
@@ -112,10 +112,10 @@
             this.gb_SLAsSource.Controls.Add(this.lb_Description_Source);
             this.gb_SLAsSource.Controls.Add(this.tb_MainEntity_Source);
             this.gb_SLAsSource.Controls.Add(this.lb_MainEntity_Source);
-            this.gb_SLAsSource.Controls.Add(this.cb_SLAsSource);
+            this.gb_SLAsSource.Controls.Add(this.cb_SLAs_Source);
             this.gb_SLAsSource.Location = new System.Drawing.Point(3, 0);
             this.gb_SLAsSource.Name = "gb_SLAsSource";
-            this.gb_SLAsSource.Size = new System.Drawing.Size(358, 179);
+            this.gb_SLAsSource.Size = new System.Drawing.Size(358, 174);
             this.gb_SLAsSource.TabIndex = 5;
             this.gb_SLAsSource.TabStop = false;
             this.gb_SLAsSource.Text = "SLAs source";
@@ -143,8 +143,11 @@
             // 
             this.tb_MainEntity_Source.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_MainEntity_Source.BackColor = System.Drawing.SystemColors.Window;
+            this.tb_MainEntity_Source.Cursor = System.Windows.Forms.Cursors.No;
             this.tb_MainEntity_Source.Location = new System.Drawing.Point(9, 64);
             this.tb_MainEntity_Source.Name = "tb_MainEntity_Source";
+            this.tb_MainEntity_Source.ReadOnly = true;
             this.tb_MainEntity_Source.Size = new System.Drawing.Size(343, 20);
             this.tb_MainEntity_Source.TabIndex = 2;
             // 
@@ -157,16 +160,16 @@
             this.lb_MainEntity_Source.TabIndex = 1;
             this.lb_MainEntity_Source.Text = "Main entity";
             // 
-            // cb_SLAsSource
+            // cb_SLAs_Source
             // 
-            this.cb_SLAsSource.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cb_SLAs_Source.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cb_SLAsSource.FormattingEnabled = true;
-            this.cb_SLAsSource.Location = new System.Drawing.Point(9, 19);
-            this.cb_SLAsSource.Name = "cb_SLAsSource";
-            this.cb_SLAsSource.Size = new System.Drawing.Size(343, 21);
-            this.cb_SLAsSource.TabIndex = 0;
-            this.cb_SLAsSource.SelectedValueChanged += new System.EventHandler(this.cb_SLAs_SelectedValueChanged);
+            this.cb_SLAs_Source.FormattingEnabled = true;
+            this.cb_SLAs_Source.Location = new System.Drawing.Point(9, 19);
+            this.cb_SLAs_Source.Name = "cb_SLAs_Source";
+            this.cb_SLAs_Source.Size = new System.Drawing.Size(343, 21);
+            this.cb_SLAs_Source.TabIndex = 0;
+            this.cb_SLAs_Source.SelectedValueChanged += new System.EventHandler(this.cb_SLAs_SelectedValueChanged);
             // 
             // gb_ElementsFromSLASelected_Source
             // 
@@ -184,7 +187,6 @@
             this.lv_ElementsOfSLA_Source.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lv_ElementsOfSLA_Source.CheckBoxes = true;
             this.lv_ElementsOfSLA_Source.FullRowSelect = true;
             this.lv_ElementsOfSLA_Source.HideSelection = false;
             this.lv_ElementsOfSLA_Source.Location = new System.Drawing.Point(6, 20);
@@ -196,9 +198,6 @@
             this.lv_ElementsOfSLA_Source.View = System.Windows.Forms.View.Details;
             this.lv_ElementsOfSLA_Source.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.llv_ElementsOfSLA_DrawColumnHeader);
             this.lv_ElementsOfSLA_Source.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.lv_ElementsOfSLA_DrawSubItem);
-            this.lv_ElementsOfSLA_Source.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lv_ElementsOfSLA_ItemChecked);
-            this.lv_ElementsOfSLA_Source.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lv_ElementsOfSLA_ItemSelectionChanged);
-            this.lv_ElementsOfSLA_Source.MouseMove += new System.Windows.Forms.MouseEventHandler(this.llv_ElementsOfSLA_MouseMove);
             // 
             // p_SLAsSource
             // 
@@ -286,27 +285,27 @@
             // 
             // gb_SLAsTarget
             // 
-            this.gb_SLAsTarget.Controls.Add(this.textBox1);
+            this.gb_SLAsTarget.Controls.Add(this.tb_Description_Target);
             this.gb_SLAsTarget.Controls.Add(this.label1);
-            this.gb_SLAsTarget.Controls.Add(this.textBox2);
+            this.gb_SLAsTarget.Controls.Add(this.tb_MainEntity_Target);
             this.gb_SLAsTarget.Controls.Add(this.label2);
-            this.gb_SLAsTarget.Controls.Add(this.comboBox1);
+            this.gb_SLAsTarget.Controls.Add(this.cb_SLAs_Target);
             this.gb_SLAsTarget.Location = new System.Drawing.Point(3, 0);
             this.gb_SLAsTarget.Name = "gb_SLAsTarget";
-            this.gb_SLAsTarget.Size = new System.Drawing.Size(358, 179);
+            this.gb_SLAsTarget.Size = new System.Drawing.Size(358, 174);
             this.gb_SLAsTarget.TabIndex = 5;
             this.gb_SLAsTarget.TabStop = false;
             this.gb_SLAsTarget.Text = "SLAs target";
             // 
-            // textBox1
+            // tb_Description_Target
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tb_Description_Target.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(9, 111);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(343, 54);
-            this.textBox1.TabIndex = 4;
+            this.tb_Description_Target.Location = new System.Drawing.Point(9, 111);
+            this.tb_Description_Target.Multiline = true;
+            this.tb_Description_Target.Name = "tb_Description_Target";
+            this.tb_Description_Target.Size = new System.Drawing.Size(343, 54);
+            this.tb_Description_Target.TabIndex = 4;
             // 
             // label1
             // 
@@ -317,14 +316,17 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Description";
             // 
-            // textBox2
+            // tb_MainEntity_Target
             // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tb_MainEntity_Target.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(9, 64);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(343, 20);
-            this.textBox2.TabIndex = 2;
+            this.tb_MainEntity_Target.BackColor = System.Drawing.SystemColors.Window;
+            this.tb_MainEntity_Target.Cursor = System.Windows.Forms.Cursors.No;
+            this.tb_MainEntity_Target.Location = new System.Drawing.Point(9, 64);
+            this.tb_MainEntity_Target.Name = "tb_MainEntity_Target";
+            this.tb_MainEntity_Target.ReadOnly = true;
+            this.tb_MainEntity_Target.Size = new System.Drawing.Size(343, 20);
+            this.tb_MainEntity_Target.TabIndex = 2;
             // 
             // label2
             // 
@@ -335,15 +337,15 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Main entity";
             // 
-            // comboBox1
+            // cb_SLAs_Target
             // 
-            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cb_SLAs_Target.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(9, 19);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(343, 21);
-            this.comboBox1.TabIndex = 0;
+            this.cb_SLAs_Target.FormattingEnabled = true;
+            this.cb_SLAs_Target.Location = new System.Drawing.Point(9, 19);
+            this.cb_SLAs_Target.Name = "cb_SLAs_Target";
+            this.cb_SLAs_Target.Size = new System.Drawing.Size(343, 21);
+            this.cb_SLAs_Target.TabIndex = 0;
             // 
             // p_Footer
             // 
@@ -409,6 +411,7 @@
             this.btn_CopyElementsOfSLA.Size = new System.Drawing.Size(40, 40);
             this.btn_CopyElementsOfSLA.TabIndex = 9;
             this.btn_CopyElementsOfSLA.UseVisualStyleBackColor = true;
+            this.btn_CopyElementsOfSLA.Click += new System.EventHandler(this.btn_CopyElementsOfSLA_Click);
             // 
             // lb_btnCopyElementsOfSLA
             // 
@@ -438,6 +441,7 @@
             this.btn_CopySLA.Size = new System.Drawing.Size(40, 40);
             this.btn_CopySLA.TabIndex = 13;
             this.btn_CopySLA.UseVisualStyleBackColor = true;
+            this.btn_CopySLA.Click += new System.EventHandler(this.btn_CopySLA_Click);
             // 
             // lb_btnCopySLA
             // 
@@ -592,7 +596,7 @@
         private System.Windows.Forms.ToolStripSeparator tssSeparator1;
         private System.Windows.Forms.GroupBox gb_SLAsSource;
         private System.Windows.Forms.Label lb_MainEntity_Source;
-        private System.Windows.Forms.ComboBox cb_SLAsSource;
+        private System.Windows.Forms.ComboBox cb_SLAs_Source;
         private System.Windows.Forms.GroupBox gb_ElementsFromSLASelected_Source;
         private System.Windows.Forms.Label lb_Description_Source;
         private System.Windows.Forms.TextBox tb_MainEntity_Source;
@@ -613,11 +617,11 @@
         private System.Windows.Forms.Button bt_SelectTarget;
         private System.Windows.Forms.Panel p_SLAsTarget;
         private System.Windows.Forms.GroupBox gb_SLAsTarget;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tb_Description_Target;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tb_MainEntity_Target;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cb_SLAs_Target;
         private System.Windows.Forms.Panel p_ElementsOfSLATarget;
         private System.Windows.Forms.GroupBox gb_ElementsFromSLASelected_Target;
         private System.Windows.Forms.ListView lv_ElementsOfSLA_Target;

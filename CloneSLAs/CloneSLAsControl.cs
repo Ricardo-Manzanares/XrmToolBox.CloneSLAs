@@ -1,4 +1,5 @@
-﻿using McTools.Xrm.Connection;
+﻿using CloneSLAs.Model;
+using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System;
@@ -23,9 +24,9 @@ namespace CloneSLAs
         private IOrganizationService _targetService;
         private ConnectionDetail _targetConnectionDetail;
 
-        private List<ListViewItem> _sourceElementsOfSLA = new List<ListViewItem>();
+        private List<ListViewItem> _sourceItemsOfSLA = new List<ListViewItem>();
         private List<Entity> _slas = new List<Entity>();
-        private List<Entity> _elementsOfsla_Source = new List<Entity>();
+        private List<Entity> _itemsOfsla_Source = new List<Entity>();
         private Entity _slaSelected_Source = new Entity();
 
         public CloneSLAsControl()
@@ -45,6 +46,9 @@ namespace CloneSLAs
                 Prepare();
                 ExecuteMethod(GetSLAs_Source);
                 LogWarning("Settings not found => a new settings file has been created!");
+                //Prevent focus on the text box
+                tb_MainEntity_Source.GotFocus += (textBox, o) => { ((TextBox)textBox).Parent.Focus(); };
+                tb_MainEntity_Target.GotFocus += (textBox, o) => { ((TextBox)textBox).Parent.Focus(); };
             }
             else
             {
@@ -73,13 +77,13 @@ namespace CloneSLAs
                     var result = args.Result as EntityCollection;
                     if (result != null)
                     {
-                        cb_SLAsSource.Items.Clear();
-                        cb_SLAsSource.DisplayMember = "Text";
-                        cb_SLAsSource.ValueMember = "Value";
+                        cb_SLAs_Source.Items.Clear();
+                        cb_SLAs_Source.DisplayMember = "Text";
+                        cb_SLAs_Source.ValueMember = "Value";
                         foreach (var entity in result.Entities)
                         {
                             _slas.Add(entity);
-                            cb_SLAsSource.Items.Add(new { Text = entity.GetAttributeValue<string>("name"), Value = entity.Id.ToString() } );
+                            cb_SLAs_Source.Items.Add(new SLA() { Text = entity.GetAttributeValue<string>("name"), Value = entity.Id, MainEntity = entity.FormattedValues["objecttypecode"].ToString() } );
                         }
                         //MessageBox.Show($"Found {result.Entities.Count} accounts");
                     }
@@ -108,13 +112,13 @@ namespace CloneSLAs
                     var result = args.Result as EntityCollection;
                     if (result != null)
                     {
-                        _elementsOfsla_Source.Clear();
-                        _sourceElementsOfSLA.Clear();                       
+                        _itemsOfsla_Source.Clear();
+                        _sourceItemsOfSLA.Clear();                       
 
                         foreach (var entity in result.Entities)
                         {
-                            _elementsOfsla_Source.Add(entity);
-                            _sourceElementsOfSLA.Add(new ListViewItem(new string[]
+                            _itemsOfsla_Source.Add(entity);
+                            _sourceItemsOfSLA.Add(new ListViewItem(new string[]
                             {
                                entity.GetAttributeValue<string>("name"),
                                _slaSelected_Source.GetAttributeValue<string>("name"),
@@ -127,7 +131,7 @@ namespace CloneSLAs
                         }
 
                         lv_ElementsOfSLA_Source.Items.Clear();
-                        lv_ElementsOfSLA_Source.Items.AddRange(_sourceElementsOfSLA.ToArray());
+                        lv_ElementsOfSLA_Source.Items.AddRange(_sourceItemsOfSLA.ToArray());
                         lv_ElementsOfSLA_Source.Items.Cast<ListViewItem>().All(k => k.Checked = false);
                         gb_ElementsFromSLASelected_Source.Text += " (" + result.Entities.Count.ToString() + ")";
                     }
@@ -174,7 +178,7 @@ namespace CloneSLAs
             }
 
             //ConfigureGridElementsOfSLAs Source
-            _sourceElementsOfSLA = new List<ListViewItem>();
+            _sourceItemsOfSLA = new List<ListViewItem>();
 
             lv_ElementsOfSLA_Source.Columns.Clear();
             lv_ElementsOfSLA_Source.Columns.Add("Name", 150);
@@ -225,12 +229,12 @@ namespace CloneSLAs
 
         private void cb_SLAs_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (cb_SLAsSource.SelectedItem != null)
+            if (cb_SLAs_Source.SelectedItem != null)
             {
-                var selectedSLA = cb_SLAsSource.SelectedItem;
+                var selectedSLA = cb_SLAs_Source.SelectedItem;
                 var selectedSLAId = ((dynamic)selectedSLA).Value;
                 var selectedSLAName = ((dynamic)selectedSLA).Text;
-                _slaSelected_Source = _slas.FirstOrDefault(s => s.Id.ToString() == selectedSLAId);
+                _slaSelected_Source = _slas.FirstOrDefault(s => s.Id == selectedSLAId);
                 if(_slaSelected_Source != null)
                 {
                     tb_MainEntity_Source.Text = _slaSelected_Source.FormattedValues["objecttypecode"].ToString();
@@ -243,33 +247,17 @@ namespace CloneSLAs
 
         private void llv_ElementsOfSLA_MouseMove(object sender, MouseEventArgs e)
         {
-            ListViewItem item = lv_ElementsOfSLA_Source.GetItemAt(e.X, e.Y);
-            if (item != null)
-            {
-                lv_ElementsOfSLA_Source.Cursor = Cursors.Hand;
-            }
-            else
-            {
-                lv_ElementsOfSLA_Source.Cursor = Cursors.Default;
-            }
+
         }
 
         private void lv_ElementsOfSLA_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            ListView item = (ListView)sender;
-            if(item != null && item.Items[e.ItemIndex] != null && item.Items[e.ItemIndex].Selected)
-            {
-                item.Items[e.ItemIndex].Checked = true;
-            }
+
         }
 
         private void lv_ElementsOfSLA_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
-            ListViewItem item = (ListViewItem)e.Item;
-            if (item != null)
-            {
-                item.Selected = item.Checked;
-            }
+
         }
 
         private void llv_ElementsOfSLA_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
@@ -341,11 +329,35 @@ namespace CloneSLAs
             var result = formCreateSLA.ShowDialog();
             if (result == DialogResult.OK)
             {
-                var test = "";
                 var newNameSLA = formCreateSLA.NewName;
                 var newMainEntitySLA = formCreateSLA.NewMainEntity;
                 var newDescriptionSLA = formCreateSLA.NewDescription;
             }            
+        }
+
+        private void btn_CopySLA_Click(object sender, EventArgs e)
+        {
+            CreateSLA formCreateSLA = new CreateSLA();
+            formCreateSLA.CopySLA = true;
+            formCreateSLA.NewName = "Test SLA (copy)";
+            var result = formCreateSLA.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                var newNameSLA = formCreateSLA.NewName;
+                var newMainEntitySLA = formCreateSLA.NewMainEntity;
+                var newDescriptionSLA = formCreateSLA.NewDescription;
+            }
+        }
+
+        private void btn_CopyElementsOfSLA_Click(object sender, EventArgs e)
+        {
+            CopySLA formCopySLA = new CopySLA();
+            formCopySLA.AddItemsToComboBox(cb_SLAs_Source.Items.Cast<SLA>().Where(k => k.Value != _slaSelected_Source.Id && k.MainEntity == _slaSelected_Source.FormattedValues["objecttypecode"].ToString()).ToList());
+            var result = formCopySLA.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Guid SLATarget = formCopySLA.GetSLATargetSelected;
+            }
         }
     }
 }

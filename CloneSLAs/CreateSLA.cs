@@ -12,14 +12,25 @@ namespace CloneSLAs
 {
     public partial class CreateSLA : Form
     {
+        private Boolean copySLA = false;
+
         public CreateSLA()
         {
             InitializeComponent();
         }
 
+        private void CreateSLA_Load(object sender, EventArgs e)
+        {
+            if (copySLA)
+            {
+                tb_NewMainEntity.ReadOnly = true;
+            }
+        }
+
         public string NewName
         {
             get { return tb_NewName.Text; }
+            set { tb_NewName.Text = value; }
         }
 
         public string NewMainEntity
@@ -30,6 +41,11 @@ namespace CloneSLAs
         public string NewDescription
         {
             get { return tb_NewDescription.Text; }
+        }
+
+        public Boolean CopySLA
+        {
+            set { copySLA = value; }
         }
 
         private void btn_Cancel_Click(object sender, EventArgs e)
@@ -59,6 +75,6 @@ namespace CloneSLAs
             }
 
             base.WndProc(ref message);
-        }
+        }       
     }
 }
