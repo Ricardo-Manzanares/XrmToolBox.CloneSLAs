@@ -558,6 +558,7 @@
             this.Controls.Add(this.p_settings);
             this.Controls.Add(this.p_control);
             this.Controls.Add(this.toolStripMenu);
+            this.Enabled = false;
             this.Name = "CloneSLAsControl";
             this.Size = new System.Drawing.Size(1351, 695);
             this.Load += new System.EventHandler(this.CloneSLAsControl_Load);
