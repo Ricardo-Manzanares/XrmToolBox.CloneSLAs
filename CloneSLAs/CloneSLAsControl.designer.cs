@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.tssSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.gb_SLAsSource = new System.Windows.Forms.GroupBox();
@@ -70,6 +71,7 @@
             this.l_environmentSource = new System.Windows.Forms.Label();
             this.l_environmentTargetValue = new System.Windows.Forms.Label();
             this.bt_SelectTarget = new System.Windows.Forms.Button();
+            this.timer_Status = new System.Windows.Forms.Timer(this.components);
             this.toolStripMenu.SuspendLayout();
             this.gb_SLAsSource.SuspendLayout();
             this.gb_ElementsFromSLASelected_Source.SuspendLayout();
@@ -124,9 +126,12 @@
             // 
             this.tb_Description_Source.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_Description_Source.BackColor = System.Drawing.SystemColors.Window;
+            this.tb_Description_Source.Cursor = System.Windows.Forms.Cursors.No;
             this.tb_Description_Source.Location = new System.Drawing.Point(9, 111);
             this.tb_Description_Source.Multiline = true;
             this.tb_Description_Source.Name = "tb_Description_Source";
+            this.tb_Description_Source.ReadOnly = true;
             this.tb_Description_Source.Size = new System.Drawing.Size(343, 54);
             this.tb_Description_Source.TabIndex = 4;
             // 
@@ -197,8 +202,8 @@
             this.lv_ElementsOfSLA_Source.TabIndex = 0;
             this.lv_ElementsOfSLA_Source.UseCompatibleStateImageBehavior = false;
             this.lv_ElementsOfSLA_Source.View = System.Windows.Forms.View.Details;
-            this.lv_ElementsOfSLA_Source.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.llv_ElementsOfSLA_DrawColumnHeader);
-            this.lv_ElementsOfSLA_Source.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.lv_ElementsOfSLA_DrawSubItem);
+            this.lv_ElementsOfSLA_Source.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.lv_ElementsOfSLA_DrawColumnHeader);
+            this.lv_ElementsOfSLA_Source.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.lv_ElementsOfSLA_Source_DrawSubItem);
             // 
             // p_SLAsSource
             // 
@@ -272,6 +277,8 @@
             this.lv_ElementsOfSLA_Target.TabIndex = 0;
             this.lv_ElementsOfSLA_Target.UseCompatibleStateImageBehavior = false;
             this.lv_ElementsOfSLA_Target.View = System.Windows.Forms.View.Details;
+            this.lv_ElementsOfSLA_Target.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.lv_ElementsOfSLA_DrawColumnHeader);
+            this.lv_ElementsOfSLA_Target.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.lv_ElementsOfSLA_Target_DrawSubItem);
             // 
             // p_SLAsTarget
             // 
@@ -302,9 +309,12 @@
             // 
             this.tb_Description_Target.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_Description_Target.BackColor = System.Drawing.SystemColors.Window;
+            this.tb_Description_Target.Cursor = System.Windows.Forms.Cursors.No;
             this.tb_Description_Target.Location = new System.Drawing.Point(9, 111);
             this.tb_Description_Target.Multiline = true;
             this.tb_Description_Target.Name = "tb_Description_Target";
+            this.tb_Description_Target.ReadOnly = true;
             this.tb_Description_Target.Size = new System.Drawing.Size(343, 54);
             this.tb_Description_Target.TabIndex = 4;
             // 
@@ -362,12 +372,10 @@
             // lb_Status
             // 
             this.lb_Status.AutoSize = true;
-            this.lb_Status.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lb_Status.Location = new System.Drawing.Point(0, 0);
+            this.lb_Status.Location = new System.Drawing.Point(1, 3);
             this.lb_Status.Name = "lb_Status";
-            this.lb_Status.Size = new System.Drawing.Size(37, 13);
+            this.lb_Status.Size = new System.Drawing.Size(0, 13);
             this.lb_Status.TabIndex = 1;
-            this.lb_Status.Text = "Status";
             // 
             // p_settings
             // 
@@ -637,5 +645,6 @@
         private System.Windows.Forms.Panel p_CopyElements;
         private System.Windows.Forms.Panel p_CopySLA;
         private System.Windows.Forms.Panel p_CreateSLA;
+        private System.Windows.Forms.Timer timer_Status;
     }
 }

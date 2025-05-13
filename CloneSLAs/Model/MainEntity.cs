@@ -10,5 +10,6 @@ namespace CloneSLAs.Model
     {
         public string LogicalName { get; set; }
         public string DisplayName { get; set; }
+        public int ObjectTypeCode { get; set; }
     }
 }

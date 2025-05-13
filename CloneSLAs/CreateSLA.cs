@@ -48,6 +48,11 @@ namespace CloneSLAs
 
                 cb_MainEntity.SelectedItem = cb_MainEntity.Items.Cast<MainEntity>().FirstOrDefault(item => item.LogicalName.Equals(_mainEntitySelected.LogicalName, StringComparison.OrdinalIgnoreCase));
             }
+            else
+            {
+                cb_MainEntity.TabIndex = 2;
+                tb_NewDescription.TabIndex = 3;
+            }
         }
 
         public string NewName
@@ -119,6 +124,7 @@ namespace CloneSLAs
                 if (cb_MainEntity.SelectedItem != null)
                 {
                     _mainEntitySelected = (MainEntity)cb_MainEntity.SelectedItem;
+                    _mainEntitySelected.ObjectTypeCode = _mainEntitys.Where(k => k.DisplayName == _mainEntitySelected.DisplayName).FirstOrDefault().ObjectTypeCode;
                 }
             }
         }

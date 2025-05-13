@@ -12,6 +12,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Runtime;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Services.Description;
@@ -25,6 +26,7 @@ namespace CloneSLAs
     {
         const string titleItemsOfSLASourceSelected = "Items of SLA source selected";
         const string titleItemsOfSLATargetSelected = "Items of SLA target selected";
+        const string textStatusLastAction = "Status of the last action: ";
 
         private Settings mySettings;
         private IOrganizationService _targetService;
@@ -33,12 +35,12 @@ namespace CloneSLAs
         private List<ListViewItem> _sourceLVItemsOfSLA = new List<ListViewItem>();
         private List<Entity> _sourceSLAs = new List<Entity>();
         private List<Entity> _sourceItemsOfSLA = new List<Entity>();
-        private Entity _sourceSALSelected = null;
+        private Entity _sourceSLASelected = null;
 
         private List<ListViewItem> _targetLVItemsOfSLA = new List<ListViewItem>();
         private List<Entity> _targetSLAs = new List<Entity>();
         private List<Entity> _targetItemsOfSLA = new List<Entity>();
-        private Entity _targetSALSelected = null;
+        private Entity _targetSLASelected = null;
 
 
         private List<MainEntity> _mainEntitys = new List<MainEntity>();
@@ -63,6 +65,9 @@ namespace CloneSLAs
                 //Prevent focus on the text box
                 tb_MainEntity_Source.GotFocus += (textBox, o) => { ((TextBox)textBox).Parent.Focus(); };
                 tb_MainEntity_Target.GotFocus += (textBox, o) => { ((TextBox)textBox).Parent.Focus(); };
+
+                tb_Description_Source.GotFocus += (textBox, o) => { ((TextBox)textBox).Parent.Focus(); };
+                tb_Description_Source.GotFocus += (textBox, o) => { ((TextBox)textBox).Parent.Focus(); };
             }
             else
             {
@@ -118,7 +123,7 @@ namespace CloneSLAs
                         {
                             Conditions =
                             {
-                                new ConditionExpression("slaid", ConditionOperator.Equal, _sourceSALSelected.Id)
+                                new ConditionExpression("slaid", ConditionOperator.Equal, _sourceSLASelected.Id)
                             }
                         },
                         Orders =
@@ -145,12 +150,13 @@ namespace CloneSLAs
                             _sourceLVItemsOfSLA.Add(new ListViewItem(new string[]
                             {
                                entity.GetAttributeValue<string>("name"),
-                               _sourceSALSelected.GetAttributeValue<string>("name"),
+                               _sourceSLASelected.GetAttributeValue<string>("name"),
                                entity.GetAttributeValue<EntityReference>("msdyn_slakpiid").Name,
                                entity.GetAttributeValue<int>("warnafter").ToString(),
                                entity.GetAttributeValue<int>("failureafter").ToString(),
-                               _sourceSALSelected.FormattedValues["statuscode"],
-                               _sourceSALSelected.FormattedValues["statecode"]
+                               _sourceSLASelected.FormattedValues["statuscode"],
+                               _sourceSLASelected.FormattedValues["statecode"],
+                               entity.GetAttributeValue<int>("sequencenumber").ToString()
                             }));
                         }
 
@@ -211,7 +217,7 @@ namespace CloneSLAs
                         {
                             Conditions =
                             {
-                                new ConditionExpression("slaid", ConditionOperator.Equal, _sourceSALSelected.Id)
+                                new ConditionExpression("slaid", ConditionOperator.Equal, _sourceSLASelected.Id)
                             }
                         },
                         Orders =
@@ -238,12 +244,13 @@ namespace CloneSLAs
                             _targetLVItemsOfSLA.Add(new ListViewItem(new string[]
                             {
                                entity.GetAttributeValue<string>("name"),
-                               _targetSALSelected.GetAttributeValue<string>("name"),
+                               _targetSLASelected.GetAttributeValue<string>("name"),
                                entity.GetAttributeValue<EntityReference>("msdyn_slakpiid").Name,
                                entity.GetAttributeValue<int>("warnafter").ToString(),
                                entity.GetAttributeValue<int>("failureafter").ToString(),
-                               _targetSALSelected.FormattedValues["statuscode"],
-                               _targetSALSelected.FormattedValues["statecode"]
+                               _targetSLASelected.FormattedValues["statuscode"],
+                               _targetSLASelected.FormattedValues["statecode"],
+                               entity.GetAttributeValue<int>("sequencenumber").ToString()
                             }));
                         }
 
@@ -290,13 +297,13 @@ namespace CloneSLAs
                         {
                             LogicalName = item.LogicalName,
                             DisplayName = ((Microsoft.Xrm.Sdk.Label)item.DisplayName).UserLocalizedLabel.Label.ToString(),
+                            ObjectTypeCode = item.ObjectTypeCode.Value
                         }).ToList();
                         this.Enabled = true;
                     }
                 }
             });
         }
-
 
         private void PluginControl_Resize(object sender, EventArgs e)
         {
@@ -348,6 +355,7 @@ namespace CloneSLAs
             lv_ElementsOfSLA_Source.Columns.Add("Error after", 100);
             lv_ElementsOfSLA_Source.Columns.Add("Status (SLA)", 100);
             lv_ElementsOfSLA_Source.Columns.Add("Reason for state (SLA)", 100);
+            lv_ElementsOfSLA_Source.Columns.Add("Secuence number", 100);
 
             ExecuteMethod(GetSLAs_Source);
             ExecuteMethod(GetMainEntitysAvaiable);           
@@ -371,11 +379,16 @@ namespace CloneSLAs
                 lv_ElementsOfSLA_Target.Columns.Add("Error after", 100);
                 lv_ElementsOfSLA_Target.Columns.Add("Status (SLA)", 100);
                 lv_ElementsOfSLA_Target.Columns.Add("Reason for state (SLA)", 100);
+                lv_ElementsOfSLA_Target.Columns.Add("Secuence number", 100);
 
                 ExecuteMethod(GetSLAs_Target);
+
+                btn_CreateSLA.Enabled = false;
             }
             else
             {
+                btn_CreateSLA.Enabled = true;
+
                 l_environmentTargetValue.Text = "Pending selected";
                 l_environmentTargetValue.ForeColor = Color.Red;
             }
@@ -425,10 +438,15 @@ namespace CloneSLAs
             // For now, only support one target org
             if (e.Action.Equals(NotifyCollectionChangedAction.Add))
             {
+                btn_CreateSLA.Enabled = false;
                 _targetConnectionDetail = (ConnectionDetail)e.NewItems[0];
                 _targetService = _targetConnectionDetail.ServiceClient;
 
                 Prepare_Target();
+            }
+            else
+            {
+                btn_CreateSLA.Enabled = true;
             }
 
             this.Enabled = true;
@@ -441,11 +459,11 @@ namespace CloneSLAs
                 var selectedSLA = cb_SLAs_Source.SelectedItem;
                 var selectedSLAId = ((dynamic)selectedSLA).Value;
                 var selectedSLAName = ((dynamic)selectedSLA).Text;
-                _sourceSALSelected = _sourceSLAs.FirstOrDefault(s => s.Id == selectedSLAId);
-                if(_sourceSALSelected != null)
+                _sourceSLASelected = _sourceSLAs.FirstOrDefault(s => s.Id == selectedSLAId);
+                if(_sourceSLASelected != null)
                 {
-                    tb_MainEntity_Source.Text = _sourceSALSelected.FormattedValues["objecttypecode"].ToString();
-                    tb_Description_Source.Text = _sourceSALSelected.GetAttributeValue<string>("description");
+                    tb_MainEntity_Source.Text = _sourceSLASelected.FormattedValues["objecttypecode"].ToString();
+                    tb_Description_Source.Text = _sourceSLASelected.GetAttributeValue<string>("description");
 
                     ExecuteMethod(GetElementsOfSLA_Source);
                     btn_CopyElementsOfSLA.Enabled = true;
@@ -461,30 +479,29 @@ namespace CloneSLAs
             }
         }
 
-        private void llv_ElementsOfSLA_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
+        private void lv_ElementsOfSLA_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
             e.DrawDefault = true;
         }
 
-        private void lv_ElementsOfSLA_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        private void lv_ElementsOfSLA_Source_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
             if (e.Item.Selected)
             {
                 e.Graphics.FillRectangle(Brushes.White, e.Bounds);
 
-                // Flags corregidos
                 TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix | TextFormatFlags.GlyphOverhangPadding | TextFormatFlags.PreserveGraphicsClipping;
                 int leftPadding = 6;
 
-                // Luego dibujamos el texto desplazado
                 Rectangle textBounds = new Rectangle(
-                    e.Bounds.X + leftPadding, // después del checkbox
+                    e.Bounds.X + leftPadding,
                     e.Bounds.Y,
                     e.Bounds.Width - (leftPadding),
                     e.Bounds.Height);
 
                 if (e.ColumnIndex == 0 && lv_ElementsOfSLA_Source.CheckBoxes)
                 {
+                    //Column checkbox
                     leftPadding -= 2;
 
                     Rectangle adjustedBounds = new Rectangle(e.Bounds.X + leftPadding, e.Bounds.Y + 2, e.Bounds.Width - leftPadding, e.Bounds.Height);
@@ -499,7 +516,7 @@ namespace CloneSLAs
                 }
                 else
                 {
-                    // Otras columnas normales
+                    // Other columns
                     TextRenderer.DrawText(e.Graphics, e.SubItem.Text, lv_ElementsOfSLA_Source.Font, textBounds, Color.Black, flags);
                 }
             }
@@ -508,30 +525,105 @@ namespace CloneSLAs
                 e.DrawDefault = true;
             }
         }
-                
-        private void btn_CreateSLA_Click(object sender, EventArgs e)
+
+        private void lv_ElementsOfSLA_Target_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
+            if (e.Item.Selected)
+            {
+                e.Graphics.FillRectangle(Brushes.White, e.Bounds);
+
+                TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.NoPadding | TextFormatFlags.NoPrefix | TextFormatFlags.GlyphOverhangPadding | TextFormatFlags.PreserveGraphicsClipping;
+                int leftPadding = 6;
+
+                Rectangle textBounds = new Rectangle(
+                    e.Bounds.X + leftPadding,
+                    e.Bounds.Y,
+                    e.Bounds.Width - (leftPadding),
+                    e.Bounds.Height);
+
+                if (e.ColumnIndex == 0 && lv_ElementsOfSLA_Target.CheckBoxes)
+                {
+                    //Column checkbox
+                    leftPadding -= 2;
+
+                    Rectangle adjustedBounds = new Rectangle(e.Bounds.X + leftPadding, e.Bounds.Y + 2, e.Bounds.Width - leftPadding, e.Bounds.Height);
+
+                    CheckBoxState state = e.Item.Checked ? CheckBoxState.CheckedNormal : CheckBoxState.UncheckedNormal;
+                    CheckBoxRenderer.DrawCheckBox(e.Graphics, adjustedBounds.Location, state);
+
+                    textBounds.X += 16;
+                    textBounds.Width -= 16;
+
+                    TextRenderer.DrawText(e.Graphics, e.SubItem.Text, lv_ElementsOfSLA_Target.Font, textBounds, Color.Black, flags);
+                }
+                else
+                {
+                    // Other columns
+                    TextRenderer.DrawText(e.Graphics, e.SubItem.Text, lv_ElementsOfSLA_Target.Font, textBounds, Color.Black, flags);
+                }
+            }
+            else
+            {
+                e.DrawDefault = true;
+            }
+        }
+
+        private void btn_CreateSLA_Click(object sender, EventArgs e)
+        {            
             CreateSLA formCreateSLA = new CreateSLA();          
             formCreateSLA.SetMainEntitys = _mainEntitys;
-            if(_sourceSALSelected != null)
-                formCreateSLA.MainEntitySelected = _mainEntitys.Where(k => k.DisplayName == _sourceSALSelected.FormattedValues["objecttypecode"].ToString()).FirstOrDefault();
+            if(_sourceSLASelected != null)
+                formCreateSLA.MainEntitySelected = _mainEntitys.Where(k => k.DisplayName == _sourceSLASelected.FormattedValues["objecttypecode"].ToString()).FirstOrDefault();
             var result = formCreateSLA.ShowDialog();
             if (result == DialogResult.OK)
             {
-                var newNameSLA = formCreateSLA.NewName;
-                var newMainEntitySLA = formCreateSLA.MainEntitySelected;
-                var newDescriptionSLA = formCreateSLA.NewDescription;
+                lb_Status.Text = "";
+                ExecuteMethod(() => Create_SLAInSource(formCreateSLA));                
             }            
+        }
+
+        private void Create_SLAInSource(CreateSLA formCreateSLA)
+        {
+            WorkAsync(new WorkAsyncInfo
+            {
+                Message = "Creating SLA...",
+                Work = (worker, args) =>
+                {
+                    //Create record SLA in Source  
+                    Entity newSLA = new Entity("sla");
+                    newSLA["name"] = formCreateSLA.NewName;
+                    newSLA["objecttypecode"] = formCreateSLA.MainEntitySelected.LogicalName;
+                    newSLA["description"] = formCreateSLA.NewDescription;
+                    newSLA["applicablefrom"] = "createdon";
+                    newSLA["slaversion"] = new OptionSetValue(100000001);
+                    newSLA["primaryentityotc"] = formCreateSLA.MainEntitySelected.ObjectTypeCode;
+
+                    args.Result = Service.Create(newSLA);
+                },
+                PostWorkCallBack = (args) =>
+                {
+                    if (args.Error != null)
+                    {
+                        MessageBox.Show(args.Error.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    var result = args.Result as Guid?;
+                    if (result != null && result.Value != Guid.Empty)
+                    {
+                        SetStatusMessage("SLA created: " + formCreateSLA.NewName);
+                        ExecuteMethod(GetSLAs_Source);
+                    }
+                }
+            });
         }
 
         private void btn_CopySLA_Click(object sender, EventArgs e)
         {
             CreateSLA formCreateSLA = new CreateSLA();
             formCreateSLA.CopySLA = true;
-            if (_sourceSALSelected != null)
+            if (_sourceSLASelected != null)
             {
-                formCreateSLA.NewName = _mainEntitys.Where(k => k.DisplayName == _sourceSALSelected.FormattedValues["objecttypecode"].ToString()).First().DisplayName + " (copy)";
-                formCreateSLA.MainEntitySelected = _mainEntitys.Where(k => k.DisplayName == _sourceSALSelected.FormattedValues["objecttypecode"].ToString()).FirstOrDefault();
+                formCreateSLA.NewName = _mainEntitys.Where(k => k.DisplayName == _sourceSLASelected.FormattedValues["objecttypecode"].ToString()).First().DisplayName + " (copy)";
+                formCreateSLA.MainEntitySelected = _mainEntitys.Where(k => k.DisplayName == _sourceSLASelected.FormattedValues["objecttypecode"].ToString()).FirstOrDefault();
             }
             
             formCreateSLA.SetMainEntitys = _mainEntitys;
@@ -547,12 +639,28 @@ namespace CloneSLAs
         private void btn_CopyItemsOfSLA_Click(object sender, EventArgs e)
         {
             CopySLA formCopySLA = new CopySLA();
-            formCopySLA.AddItemsToComboBox(cb_SLAs_Source.Items.Cast<SLA>().Where(k => k.Value != _sourceSALSelected.Id && k.MainEntity == _sourceSALSelected.FormattedValues["objecttypecode"].ToString()).ToList());
+            formCopySLA.AddItemsToComboBox(cb_SLAs_Source.Items.Cast<SLA>().Where(k => k.Value != _sourceSLASelected.Id && k.MainEntity == _sourceSLASelected.FormattedValues["objecttypecode"].ToString()).ToList());
             var result = formCopySLA.ShowDialog();
             if (result == DialogResult.OK)
             {
                 Guid SLATarget = formCopySLA.GetSLATargetSelected;
             }
+        }
+
+        private void SetStatusMessage (string message)
+        {
+            lb_Status.Text = textStatusLastAction + message;
+            p_Footer.BackColor = Color.Yellow;
+            timer_Status = new Timer();
+            timer_Status.Interval = 2000;
+            timer_Status.Tick += new EventHandler(HideStatusMessage);
+            timer_Status.Start();
+        }
+
+        private void HideStatusMessage (object sender, EventArgs e)
+        {
+            lb_Status.Text = "";
+            p_Footer.BackColor = Color.Transparent;
         }
     }
 }
