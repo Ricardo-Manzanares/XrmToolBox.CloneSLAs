@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gb_NewSLA = new System.Windows.Forms.GroupBox();
+            this.gb_FieldsSLA = new System.Windows.Forms.GroupBox();
             this.cb_MainEntity = new System.Windows.Forms.ComboBox();
-            this.tb_NewName = new System.Windows.Forms.TextBox();
-            this.lb_NewName = new System.Windows.Forms.Label();
-            this.tb_NewDescription = new System.Windows.Forms.TextBox();
+            this.tb_NewOrCopyName = new System.Windows.Forms.TextBox();
+            this.lb_NewOrCopyName = new System.Windows.Forms.Label();
+            this.tb_NewOrCopyDescription = new System.Windows.Forms.TextBox();
             this.lb_Description_Source = new System.Windows.Forms.Label();
             this.lb_MainEntity = new System.Windows.Forms.Label();
             this.p_CopySLA = new System.Windows.Forms.Panel();
@@ -40,26 +40,26 @@
             this.lb_btnCancelSLA = new System.Windows.Forms.Label();
             this.p_CreateSLA = new System.Windows.Forms.Panel();
             this.btn_CreateSLA = new System.Windows.Forms.Button();
-            this.lb_btnCreateSLA = new System.Windows.Forms.Label();
-            this.gb_NewSLA.SuspendLayout();
+            this.lb_btnCreateOrCopySLA = new System.Windows.Forms.Label();
+            this.gb_FieldsSLA.SuspendLayout();
             this.p_CopySLA.SuspendLayout();
             this.p_CreateSLA.SuspendLayout();
             this.SuspendLayout();
             // 
-            // gb_NewSLA
+            // gb_FieldsSLA
             // 
-            this.gb_NewSLA.Controls.Add(this.cb_MainEntity);
-            this.gb_NewSLA.Controls.Add(this.tb_NewName);
-            this.gb_NewSLA.Controls.Add(this.lb_NewName);
-            this.gb_NewSLA.Controls.Add(this.tb_NewDescription);
-            this.gb_NewSLA.Controls.Add(this.lb_Description_Source);
-            this.gb_NewSLA.Controls.Add(this.lb_MainEntity);
-            this.gb_NewSLA.Location = new System.Drawing.Point(12, 12);
-            this.gb_NewSLA.Name = "gb_NewSLA";
-            this.gb_NewSLA.Size = new System.Drawing.Size(358, 176);
-            this.gb_NewSLA.TabIndex = 6;
-            this.gb_NewSLA.TabStop = false;
-            this.gb_NewSLA.Text = "New SLA";
+            this.gb_FieldsSLA.Controls.Add(this.cb_MainEntity);
+            this.gb_FieldsSLA.Controls.Add(this.tb_NewOrCopyName);
+            this.gb_FieldsSLA.Controls.Add(this.lb_NewOrCopyName);
+            this.gb_FieldsSLA.Controls.Add(this.tb_NewOrCopyDescription);
+            this.gb_FieldsSLA.Controls.Add(this.lb_Description_Source);
+            this.gb_FieldsSLA.Controls.Add(this.lb_MainEntity);
+            this.gb_FieldsSLA.Location = new System.Drawing.Point(12, 12);
+            this.gb_FieldsSLA.Name = "gb_FieldsSLA";
+            this.gb_FieldsSLA.Size = new System.Drawing.Size(358, 176);
+            this.gb_FieldsSLA.TabIndex = 6;
+            this.gb_FieldsSLA.TabStop = false;
+            this.gb_FieldsSLA.Text = "Fields SLA";
             // 
             // cb_MainEntity
             // 
@@ -71,33 +71,33 @@
             this.cb_MainEntity.TabIndex = 19;
             this.cb_MainEntity.SelectedValueChanged += new System.EventHandler(this.cb_MainEntity_SelectedValueChanged);
             // 
-            // tb_NewName
+            // tb_NewOrCopyName
             // 
-            this.tb_NewName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tb_NewOrCopyName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_NewName.Location = new System.Drawing.Point(6, 32);
-            this.tb_NewName.Name = "tb_NewName";
-            this.tb_NewName.Size = new System.Drawing.Size(343, 20);
-            this.tb_NewName.TabIndex = 1;
+            this.tb_NewOrCopyName.Location = new System.Drawing.Point(6, 32);
+            this.tb_NewOrCopyName.Name = "tb_NewOrCopyName";
+            this.tb_NewOrCopyName.Size = new System.Drawing.Size(343, 20);
+            this.tb_NewOrCopyName.TabIndex = 1;
             // 
-            // lb_NewName
+            // lb_NewOrCopyName
             // 
-            this.lb_NewName.AutoSize = true;
-            this.lb_NewName.Location = new System.Drawing.Point(6, 16);
-            this.lb_NewName.Name = "lb_NewName";
-            this.lb_NewName.Size = new System.Drawing.Size(35, 13);
-            this.lb_NewName.TabIndex = 5;
-            this.lb_NewName.Text = "Name";
+            this.lb_NewOrCopyName.AutoSize = true;
+            this.lb_NewOrCopyName.Location = new System.Drawing.Point(6, 16);
+            this.lb_NewOrCopyName.Name = "lb_NewOrCopyName";
+            this.lb_NewOrCopyName.Size = new System.Drawing.Size(35, 13);
+            this.lb_NewOrCopyName.TabIndex = 5;
+            this.lb_NewOrCopyName.Text = "Name";
             // 
-            // tb_NewDescription
+            // tb_NewOrCopyDescription
             // 
-            this.tb_NewDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tb_NewOrCopyDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_NewDescription.Location = new System.Drawing.Point(6, 110);
-            this.tb_NewDescription.Multiline = true;
-            this.tb_NewDescription.Name = "tb_NewDescription";
-            this.tb_NewDescription.Size = new System.Drawing.Size(343, 54);
-            this.tb_NewDescription.TabIndex = 2;
+            this.tb_NewOrCopyDescription.Location = new System.Drawing.Point(6, 110);
+            this.tb_NewOrCopyDescription.Multiline = true;
+            this.tb_NewOrCopyDescription.Name = "tb_NewOrCopyDescription";
+            this.tb_NewOrCopyDescription.Size = new System.Drawing.Size(343, 54);
+            this.tb_NewOrCopyDescription.TabIndex = 2;
             // 
             // lb_Description_Source
             // 
@@ -150,7 +150,7 @@
             // p_CreateSLA
             // 
             this.p_CreateSLA.Controls.Add(this.btn_CreateSLA);
-            this.p_CreateSLA.Controls.Add(this.lb_btnCreateSLA);
+            this.p_CreateSLA.Controls.Add(this.lb_btnCreateOrCopySLA);
             this.p_CreateSLA.Location = new System.Drawing.Point(92, 194);
             this.p_CreateSLA.Name = "p_CreateSLA";
             this.p_CreateSLA.Size = new System.Drawing.Size(69, 59);
@@ -167,15 +167,15 @@
             this.btn_CreateSLA.UseVisualStyleBackColor = true;
             this.btn_CreateSLA.Click += new System.EventHandler(this.btn_CreateSLA_Click);
             // 
-            // lb_btnCreateSLA
+            // lb_btnCreateOrCopySLA
             // 
-            this.lb_btnCreateSLA.AutoSize = true;
-            this.lb_btnCreateSLA.Location = new System.Drawing.Point(1, 43);
-            this.lb_btnCreateSLA.Name = "lb_btnCreateSLA";
-            this.lb_btnCreateSLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.lb_btnCreateSLA.Size = new System.Drawing.Size(64, 13);
-            this.lb_btnCreateSLA.TabIndex = 8;
-            this.lb_btnCreateSLA.Text = "Create SLA";
+            this.lb_btnCreateOrCopySLA.AutoSize = true;
+            this.lb_btnCreateOrCopySLA.Location = new System.Drawing.Point(1, 43);
+            this.lb_btnCreateOrCopySLA.Name = "lb_btnCreateOrCopySLA";
+            this.lb_btnCreateOrCopySLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.lb_btnCreateOrCopySLA.Size = new System.Drawing.Size(64, 13);
+            this.lb_btnCreateOrCopySLA.TabIndex = 8;
+            this.lb_btnCreateOrCopySLA.Text = "Create SLA";
             // 
             // CreateSLA
             // 
@@ -184,7 +184,7 @@
             this.ClientSize = new System.Drawing.Size(385, 265);
             this.Controls.Add(this.p_CopySLA);
             this.Controls.Add(this.p_CreateSLA);
-            this.Controls.Add(this.gb_NewSLA);
+            this.Controls.Add(this.gb_FieldsSLA);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -194,8 +194,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Create SLA";
             this.Load += new System.EventHandler(this.CreateSLA_Load);
-            this.gb_NewSLA.ResumeLayout(false);
-            this.gb_NewSLA.PerformLayout();
+            this.gb_FieldsSLA.ResumeLayout(false);
+            this.gb_FieldsSLA.PerformLayout();
             this.p_CopySLA.ResumeLayout(false);
             this.p_CopySLA.PerformLayout();
             this.p_CreateSLA.ResumeLayout(false);
@@ -206,8 +206,8 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox gb_NewSLA;
-        private System.Windows.Forms.TextBox tb_NewDescription;
+        private System.Windows.Forms.GroupBox gb_FieldsSLA;
+        private System.Windows.Forms.TextBox tb_NewOrCopyDescription;
         private System.Windows.Forms.Label lb_Description_Source;
         private System.Windows.Forms.Label lb_MainEntity;
         private System.Windows.Forms.Panel p_CopySLA;
@@ -215,9 +215,9 @@
         private System.Windows.Forms.Label lb_btnCancelSLA;
         private System.Windows.Forms.Panel p_CreateSLA;
         private System.Windows.Forms.Button btn_CreateSLA;
-        private System.Windows.Forms.Label lb_btnCreateSLA;
-        private System.Windows.Forms.TextBox tb_NewName;
-        private System.Windows.Forms.Label lb_NewName;
+        private System.Windows.Forms.Label lb_btnCreateOrCopySLA;
+        private System.Windows.Forms.TextBox tb_NewOrCopyName;
+        private System.Windows.Forms.Label lb_NewOrCopyName;
         private System.Windows.Forms.ComboBox cb_MainEntity;
     }
 }

@@ -168,11 +168,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CopySLA.cs">
+    <Compile Include="CopySLAItems.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CopySLA.Designer.cs">
-      <DependentUpon>CopySLA.cs</DependentUpon>
+    <Compile Include="CopySLAItems.Designer.cs">
+      <DependentUpon>CopySLAItems.cs</DependentUpon>
     </Compile>
     <Compile Include="CloneSLAsPlugin.cs" />
     <Compile Include="CloneSLAsControl.cs">
@@ -201,8 +201,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CopySLA.resx">
-      <DependentUpon>CopySLA.cs</DependentUpon>
+    <EmbeddedResource Include="CopySLAItems.resx">
+      <DependentUpon>CopySLAItems.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CloneSLAsControl.resx">
       <DependentUpon>CloneSLAsControl.cs</DependentUpon>

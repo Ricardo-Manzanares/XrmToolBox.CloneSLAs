@@ -45,20 +45,23 @@ namespace CloneSLAs
                 cb_MainEntity.MouseDown += (combobox, o) => { ((ComboBox)combobox).DroppedDown = false; };
                 cb_MainEntity.Enter += (combobox, o) => { ((ComboBox)combobox).Parent.Focus(); };
                 cb_MainEntity.Cursor = Cursors.No;
+                
+                this.Text = "Copy SLA";
+                lb_btnCreateOrCopySLA.Text = "Copy SLA";
 
                 cb_MainEntity.SelectedItem = cb_MainEntity.Items.Cast<MainEntity>().FirstOrDefault(item => item.LogicalName.Equals(_mainEntitySelected.LogicalName, StringComparison.OrdinalIgnoreCase));
             }
             else
             {
                 cb_MainEntity.TabIndex = 2;
-                tb_NewDescription.TabIndex = 3;
+                tb_NewOrCopyDescription.TabIndex = 3;
             }
         }
 
         public string NewName
         {
-            get { return tb_NewName.Text; }
-            set { tb_NewName.Text = value; }
+            get { return tb_NewOrCopyName.Text; }
+            set { tb_NewOrCopyName.Text = value; }
         }
 
         public MainEntity MainEntitySelected
@@ -75,7 +78,8 @@ namespace CloneSLAs
 
         public string NewDescription
         {
-            get { return tb_NewDescription.Text; }
+            get { return tb_NewOrCopyDescription.Text; }
+            set { tb_NewOrCopyDescription.Text = value; }
         }
 
         public Boolean CopySLA

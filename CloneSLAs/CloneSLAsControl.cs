@@ -217,7 +217,7 @@ namespace CloneSLAs
                         {
                             Conditions =
                             {
-                                new ConditionExpression("slaid", ConditionOperator.Equal, _sourceSLASelected.Id)
+                                new ConditionExpression("slaid", ConditionOperator.Equal, _targetSLASelected.Id)
                             }
                         },
                         Orders =
@@ -467,15 +467,18 @@ namespace CloneSLAs
 
                     ExecuteMethod(GetElementsOfSLA_Source);
                     btn_CopyElementsOfSLA.Enabled = true;
+                    btn_CopySLA.Enabled = true;
                 }
                 else
                 {
                     btn_CopyElementsOfSLA.Enabled = false;
+                    btn_CopySLA.Enabled = false;
                 }
             }
             else
             {
                 btn_CopyElementsOfSLA.Enabled = false;
+                btn_CopySLA.Enabled = false;
             }
         }
 
@@ -578,15 +581,15 @@ namespace CloneSLAs
             if (result == DialogResult.OK)
             {
                 lb_Status.Text = "";
-                ExecuteMethod(() => Create_SLAInSource(formCreateSLA));                
+                ExecuteMethod(() => CreateOrCopy_SLA(formCreateSLA, true));                
             }            
         }
 
-        private void Create_SLAInSource(CreateSLA formCreateSLA)
+        private void CreateOrCopy_SLA(CreateSLA formCreateSLA, Boolean create)
         {
             WorkAsync(new WorkAsyncInfo
             {
-                Message = "Creating SLA...",
+                Message = create == true ? "Creating SLA..." : "Copying SLA...",
                 Work = (worker, args) =>
                 {
                     //Create record SLA in Source  
@@ -594,11 +597,18 @@ namespace CloneSLAs
                     newSLA["name"] = formCreateSLA.NewName;
                     newSLA["objecttypecode"] = formCreateSLA.MainEntitySelected.LogicalName;
                     newSLA["description"] = formCreateSLA.NewDescription;
-                    newSLA["applicablefrom"] = "createdon";
-                    newSLA["slaversion"] = new OptionSetValue(100000001);
+                    newSLA["applicablefrom"] = create == true ? "createdon" : (_sourceSLASelected.Contains("applicablefrom") ? _sourceSLASelected.Attributes["applicablefrom"] : "createdon");
+                    newSLA["slaversion"] = create == true ? new OptionSetValue(100000001) : (_sourceSLASelected.Contains("slaversion") ? _sourceSLASelected.Attributes["slaversion"] : new OptionSetValue(100000001));
                     newSLA["primaryentityotc"] = formCreateSLA.MainEntitySelected.ObjectTypeCode;
 
-                    args.Result = Service.Create(newSLA);
+                    if(_targetService == null)
+                    {
+                        args.Result = Service.Create(newSLA);
+                    }
+                    else
+                    {
+                        args.Result = _targetService.Create(newSLA);
+                    }
                 },
                 PostWorkCallBack = (args) =>
                 {
@@ -609,8 +619,106 @@ namespace CloneSLAs
                     var result = args.Result as Guid?;
                     if (result != null && result.Value != Guid.Empty)
                     {
-                        SetStatusMessage("SLA created: " + formCreateSLA.NewName);
-                        ExecuteMethod(GetSLAs_Source);
+                        SetStatusMessage(create == true ? "SLA created: " : "SLA copied: " + formCreateSLA.NewName);
+                        if (create == true)
+                        {
+                            //Refresh SLAs in source
+                            ExecuteMethod(GetSLAs_Source);
+                            //Refresh elements of SLA in source
+                            ExecuteMethod(GetElementsOfSLA_Source);
+                        }
+                        else
+                        {
+                            ExecuteMethod(() => Copy_SLAItems(result.Value));
+                        }
+                    }
+                }
+            });
+        }
+
+        private void Copy_SLAItems(Guid newSLA)
+        {
+            WorkAsync(new WorkAsyncInfo
+            {
+                Message = "Copying SLA items...",
+                Work = (worker, args) =>
+                {
+                    //Copy items of SLA to source or target
+                    foreach (var item in _sourceItemsOfSLA)
+                    {
+                        try
+                        {
+                            Entity newItemInSLA = new Entity("slaitem");
+                            newItemInSLA["slaid"] = new EntityReference("sla", newSLA);
+                            newItemInSLA["name"] = item.Attributes["name"];
+
+                            if(item.Attributes.Contains("msdyn_slakpiid"))
+                                newItemInSLA["msdyn_slakpiid"] = item.Attributes["msdyn_slakpiid"];
+                            if (item.Attributes.Contains("warnafter"))
+                                newItemInSLA["warnafter"] = item.Attributes["warnafter"];
+                            if (item.Attributes.Contains("failureafter"))
+                                newItemInSLA["failureafter"] = item.Attributes["failureafter"];
+                            if (item.Attributes.Contains("sequencenumber"))
+                                newItemInSLA["sequencenumber"] = item.Attributes["sequencenumber"];
+                            if (item.Attributes.Contains("statuscode"))
+                                newItemInSLA["statuscode"] = item.Attributes["statuscode"];
+                            if (item.Attributes.Contains("statecode"))
+                                newItemInSLA["statecode"] = item.Attributes["statecode"];
+                            if (item.Attributes.Contains("allowpauseresume"))
+                                newItemInSLA["allowpauseresume"] = item.Attributes["allowpauseresume"];
+                            if (item.Attributes.Contains("versionnumber"))
+                                newItemInSLA["versionnumber"] = item.Attributes["versionnumber"];
+                            if (item.Attributes.Contains("componentstate"))
+                                newItemInSLA["componentstate"] = item.Attributes["componentstate"];
+
+                            if (item.Attributes.Contains("applicablewhenxml"))
+                                newItemInSLA["applicablewhenxml"] = item.Attributes["applicablewhenxml"];
+                            if (item.Attributes.Contains("successconditionsxml"))
+                                newItemInSLA["successconditionsxml"] = item.Attributes["successconditionsxml"];
+                            if (item.Attributes.Contains("msdyn_pauseconfigurationxml"))
+                                newItemInSLA["msdyn_pauseconfigurationxml"] = item.Attributes["msdyn_pauseconfigurationxml"];                            
+
+                            if (_targetService == null)
+                            {
+                                Service.Create(newItemInSLA);
+                            }
+                            else
+                            {
+                                _targetService.Create(newItemInSLA);
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            throw;
+                        }                        
+                    }
+
+                    args.Result = true;
+                },
+                PostWorkCallBack = (args) =>
+                {
+                    if (args.Error != null)
+                    {
+                        MessageBox.Show(args.Error.ToString(), "Any SLA items copy error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    var result = args.Result as Boolean?;
+                    if (result != null && result.Value)
+                    {
+                        SetStatusMessage("SLA items copied sucess");
+                        if (_targetService != null)
+                        {
+                            //Refresh SLAs in target
+                            ExecuteMethod(GetSLAs_Target);
+                            //Refresh elements of SLA in target
+                            ExecuteMethod(GetElementsOfSLA_Target);
+                        }
+                        else
+                        {
+                            //Refresh SLAs in source
+                            ExecuteMethod(GetSLAs_Source);
+                            //Refresh elements of SLA in source
+                            ExecuteMethod(GetElementsOfSLA_Source);
+                        }
                     }
                 }
             });
@@ -622,23 +730,24 @@ namespace CloneSLAs
             formCreateSLA.CopySLA = true;
             if (_sourceSLASelected != null)
             {
-                formCreateSLA.NewName = _mainEntitys.Where(k => k.DisplayName == _sourceSLASelected.FormattedValues["objecttypecode"].ToString()).First().DisplayName + " (copy)";
-                formCreateSLA.MainEntitySelected = _mainEntitys.Where(k => k.DisplayName == _sourceSLASelected.FormattedValues["objecttypecode"].ToString()).FirstOrDefault();
+                var mainEntitySelected = _mainEntitys.Where(k => k.DisplayName == _sourceSLASelected.FormattedValues["objecttypecode"].ToString()).FirstOrDefault();
+                formCreateSLA.MainEntitySelected = mainEntitySelected;
+                formCreateSLA.NewName = _sourceSLASelected.Attributes["name"] + " (copy)";  
+                formCreateSLA.NewDescription = _sourceSLASelected.Attributes["description"] != null ? _sourceSLASelected.Attributes["description"].ToString() : "";
             }
             
             formCreateSLA.SetMainEntitys = _mainEntitys;
             var result = formCreateSLA.ShowDialog();
             if (result == DialogResult.OK)
             {
-                var newNameSLA = formCreateSLA.NewName;
-                var newMainEntitySLA = formCreateSLA.MainEntitySelected;
-                var newDescriptionSLA = formCreateSLA.NewDescription;
+                lb_Status.Text = "";
+                ExecuteMethod(() => CreateOrCopy_SLA(formCreateSLA, false));
             }
         }
 
         private void btn_CopyItemsOfSLA_Click(object sender, EventArgs e)
         {
-            CopySLA formCopySLA = new CopySLA();
+            CopySLAItems formCopySLA = new CopySLAItems();
             formCopySLA.AddItemsToComboBox(cb_SLAs_Source.Items.Cast<SLA>().Where(k => k.Value != _sourceSLASelected.Id && k.MainEntity == _sourceSLASelected.FormattedValues["objecttypecode"].ToString()).ToList());
             var result = formCopySLA.ShowDialog();
             if (result == DialogResult.OK)

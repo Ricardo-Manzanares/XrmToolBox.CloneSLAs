@@ -11,11 +11,11 @@ using System.Windows.Forms;
 
 namespace CloneSLAs
 {
-    public partial class CopySLA : Form
+    public partial class CopySLAItems : Form
     {
         private Guid SLATargetSelected;
 
-        public CopySLA()
+        public CopySLAItems()
         {
             InitializeComponent();
         }

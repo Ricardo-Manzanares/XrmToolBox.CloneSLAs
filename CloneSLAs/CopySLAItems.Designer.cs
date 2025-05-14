@@ -1,6 +1,6 @@
 ﻿namespace CloneSLAs
 {
-    partial class CopySLA
+    partial class CopySLAItems
     {
         /// <summary>
         /// Required designer variable.
@@ -36,7 +36,6 @@
             this.lb_btnCopySLA = new System.Windows.Forms.Label();
             this.gb_NewSLA = new System.Windows.Forms.GroupBox();
             this.cb_SLATarget = new System.Windows.Forms.ComboBox();
-            this.lb_NewName = new System.Windows.Forms.Label();
             this.p_CopySLA.SuspendLayout();
             this.p_CreateSLA.SuspendLayout();
             this.gb_NewSLA.SuspendLayout();
@@ -46,7 +45,7 @@
             // 
             this.p_CopySLA.Controls.Add(this.btn_Cancel);
             this.p_CopySLA.Controls.Add(this.lb_btnCancelSLA);
-            this.p_CopySLA.Location = new System.Drawing.Point(191, 82);
+            this.p_CopySLA.Location = new System.Drawing.Point(191, 71);
             this.p_CopySLA.Name = "p_CopySLA";
             this.p_CopySLA.Size = new System.Drawing.Size(69, 59);
             this.p_CopySLA.TabIndex = 21;
@@ -76,7 +75,7 @@
             // 
             this.p_CreateSLA.Controls.Add(this.btn_CopySLA);
             this.p_CreateSLA.Controls.Add(this.lb_btnCopySLA);
-            this.p_CreateSLA.Location = new System.Drawing.Point(95, 82);
+            this.p_CreateSLA.Location = new System.Drawing.Point(95, 71);
             this.p_CreateSLA.Name = "p_CreateSLA";
             this.p_CreateSLA.Size = new System.Drawing.Size(69, 59);
             this.p_CreateSLA.TabIndex = 20;
@@ -105,10 +104,9 @@
             // gb_NewSLA
             // 
             this.gb_NewSLA.Controls.Add(this.cb_SLATarget);
-            this.gb_NewSLA.Controls.Add(this.lb_NewName);
             this.gb_NewSLA.Location = new System.Drawing.Point(13, 12);
             this.gb_NewSLA.Name = "gb_NewSLA";
-            this.gb_NewSLA.Size = new System.Drawing.Size(358, 64);
+            this.gb_NewSLA.Size = new System.Drawing.Size(358, 53);
             this.gb_NewSLA.TabIndex = 19;
             this.gb_NewSLA.TabStop = false;
             this.gb_NewSLA.Text = "SLA target";
@@ -116,43 +114,33 @@
             // cb_SLATarget
             // 
             this.cb_SLATarget.FormattingEnabled = true;
-            this.cb_SLATarget.Location = new System.Drawing.Point(9, 33);
+            this.cb_SLATarget.Location = new System.Drawing.Point(6, 19);
             this.cb_SLATarget.Name = "cb_SLATarget";
             this.cb_SLATarget.Size = new System.Drawing.Size(343, 21);
             this.cb_SLATarget.TabIndex = 1;
             this.cb_SLATarget.SelectionChangeCommitted += new System.EventHandler(this.cb_SLATarget_SelectionChangeCommitted);
             // 
-            // lb_NewName
-            // 
-            this.lb_NewName.AutoSize = true;
-            this.lb_NewName.Location = new System.Drawing.Point(6, 16);
-            this.lb_NewName.Name = "lb_NewName";
-            this.lb_NewName.Size = new System.Drawing.Size(32, 13);
-            this.lb_NewName.TabIndex = 5;
-            this.lb_NewName.Text = "SLAs";
-            // 
-            // CopySLA
+            // CopySLAItems
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(385, 150);
+            this.ClientSize = new System.Drawing.Size(385, 135);
             this.Controls.Add(this.p_CopySLA);
             this.Controls.Add(this.p_CreateSLA);
             this.Controls.Add(this.gb_NewSLA);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "CopySLA";
+            this.Name = "CopySLAItems";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Copy SLA";
+            this.Text = "Copy SLA items";
             this.p_CopySLA.ResumeLayout(false);
             this.p_CopySLA.PerformLayout();
             this.p_CreateSLA.ResumeLayout(false);
             this.p_CreateSLA.PerformLayout();
             this.gb_NewSLA.ResumeLayout(false);
-            this.gb_NewSLA.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -166,7 +154,6 @@
         private System.Windows.Forms.Button btn_CopySLA;
         private System.Windows.Forms.Label lb_btnCopySLA;
         private System.Windows.Forms.GroupBox gb_NewSLA;
-        private System.Windows.Forms.Label lb_NewName;
         private System.Windows.Forms.ComboBox cb_SLATarget;
     }
 }
