@@ -724,7 +724,7 @@ namespace CloneSLAs
                     {
                         try
                         {
-                            Entity newItemInSLA = new Entity("slaitem", item.Id);
+                            Entity newItemInSLA = new Entity("slaitem", _targetService == null ? item.Id : Guid.NewGuid());
                             newItemInSLA["slaid"] = new EntityReference("sla", newSLA);
                             newItemInSLA["name"] = item.Attributes["name"];
 
