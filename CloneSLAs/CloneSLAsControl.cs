@@ -42,6 +42,8 @@ namespace CloneSLAs
         private List<Entity> _targetItemsOfSLA = new List<Entity>();
         private Entity _targetSLASelected = null;
 
+        private List<Entity> _SLAKPIs = new List<Entity>();
+
 
         private List<MainEntity> _mainEntitys = new List<MainEntity>();
 
@@ -305,6 +307,33 @@ namespace CloneSLAs
             });
         }
 
+        private void GetSLAKPIsAvaiable()
+        {
+            WorkAsync(new WorkAsyncInfo
+            {
+                Message = "Getting SLA KPIs avaiable",
+                Work = (worker, args) =>
+                {
+                    args.Result = Service.RetrieveMultiple(new QueryExpression("msdyn_slakpi")
+                    {
+                        ColumnSet = new ColumnSet(true),
+                    });
+                },
+                PostWorkCallBack = (args) =>
+                {
+                    if (args.Error != null)
+                    {
+                        MessageBox.Show(args.Error.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    var result = args.Result as EntityCollection;
+                    if (result != null)
+                    {
+                        _SLAKPIs = result.Entities.ToList();
+                    }
+                }
+            });
+        }
+
         private void PluginControl_Resize(object sender, EventArgs e)
         {
             int h = (this.ParentForm.Height / 2) - p_settings.Height;
@@ -357,8 +386,12 @@ namespace CloneSLAs
             lv_ElementsOfSLA_Source.Columns.Add("Reason for state (SLA)", 100);
             lv_ElementsOfSLA_Source.Columns.Add("Secuence number", 100);
 
+            tb_MainEntity_Source.Text = "";
+            tb_Description_Source.Text = "";
+
             ExecuteMethod(GetSLAs_Source);
-            ExecuteMethod(GetMainEntitysAvaiable);           
+            ExecuteMethod(GetMainEntitysAvaiable);
+            ExecuteMethod(GetSLAKPIsAvaiable);
         }
 
         private void Prepare_Target()
@@ -380,6 +413,9 @@ namespace CloneSLAs
                 lv_ElementsOfSLA_Target.Columns.Add("Status (SLA)", 100);
                 lv_ElementsOfSLA_Target.Columns.Add("Reason for state (SLA)", 100);
                 lv_ElementsOfSLA_Target.Columns.Add("Secuence number", 100);
+
+                tb_MainEntity_Target.Text = "";
+                tb_Description_Target.Text = "";
 
                 ExecuteMethod(GetSLAs_Target);
 
@@ -465,7 +501,9 @@ namespace CloneSLAs
                     tb_MainEntity_Source.Text = _sourceSLASelected.FormattedValues["objecttypecode"].ToString();
                     tb_Description_Source.Text = _sourceSLASelected.GetAttributeValue<string>("description");
 
-                    ExecuteMethod(GetElementsOfSLA_Source);
+                    if (_sourceSLASelected != null)
+                        ExecuteMethod(GetElementsOfSLA_Source);
+
                     btn_CopyElementsOfSLA.Enabled = true;
                     btn_CopySLA.Enabled = true;
                 }
@@ -625,7 +663,8 @@ namespace CloneSLAs
                             //Refresh SLAs in source
                             ExecuteMethod(GetSLAs_Source);
                             //Refresh elements of SLA in source
-                            ExecuteMethod(GetElementsOfSLA_Source);
+                            if (_sourceSLASelected != null)
+                                ExecuteMethod(GetElementsOfSLA_Source);
                         }
                         else
                         {
@@ -643,6 +682,33 @@ namespace CloneSLAs
                 Message = "Copying SLA items...",
                 Work = (worker, args) =>
                 {
+                    var statusSLAItems = true;
+                    var kpi = _SLAKPIs.Where(k => k.Id == _sourceItemsOfSLA[0].GetAttributeValue<EntityReference>("msdyn_slakpiid").Id).FirstOrDefault();
+                    var responseSLAKPIGUID = Guid.Empty;
+                    if (kpi != null)
+                    {
+                        kpi["statecode"] = new OptionSetValue(0);
+                        kpi["statuscode"] = new OptionSetValue(1);
+
+                        //Copy SLA KPI to target
+                        responseSLAKPIGUID = UpSert(kpi);
+                        if (responseSLAKPIGUID == null || responseSLAKPIGUID == Guid.Empty)
+                        {
+                            statusSLAItems = false;
+                        }
+                        else
+                        {
+                            kpi["statecode"] = new OptionSetValue(1);
+                            kpi["statuscode"] = new OptionSetValue(2);
+
+                            //Copy SLA KPI to target
+                            responseSLAKPIGUID = UpSert(kpi);
+                        }
+                    }
+                    else
+                    {
+                        LogWarning($"SLA KPI not found");
+                    }
                     //Copy items of SLA to source or target
                     foreach (var item in _sourceItemsOfSLA)
                     {
@@ -652,8 +718,12 @@ namespace CloneSLAs
                             newItemInSLA["slaid"] = new EntityReference("sla", newSLA);
                             newItemInSLA["name"] = item.Attributes["name"];
 
-                            if(item.Attributes.Contains("msdyn_slakpiid"))
-                                newItemInSLA["msdyn_slakpiid"] = item.Attributes["msdyn_slakpiid"];
+                            if (item.Attributes.Contains("msdyn_slakpiid"))
+                            {
+                                //Set SLA KPI in new SLA item
+                                newItemInSLA["msdyn_slakpiid"] = new EntityReference("msdyn_slakpi", responseSLAKPIGUID);
+                                
+                            }
                             if (item.Attributes.Contains("warnafter"))
                                 newItemInSLA["warnafter"] = item.Attributes["warnafter"];
                             if (item.Attributes.Contains("failureafter"))
@@ -676,24 +746,21 @@ namespace CloneSLAs
                             if (item.Attributes.Contains("successconditionsxml"))
                                 newItemInSLA["successconditionsxml"] = item.Attributes["successconditionsxml"];
                             if (item.Attributes.Contains("msdyn_pauseconfigurationxml"))
-                                newItemInSLA["msdyn_pauseconfigurationxml"] = item.Attributes["msdyn_pauseconfigurationxml"];                            
+                                newItemInSLA["msdyn_pauseconfigurationxml"] = item.Attributes["msdyn_pauseconfigurationxml"];
 
-                            if (_targetService == null)
+                            var responseSLAItemGUID = UpSert(newItemInSLA);
+                            if (responseSLAItemGUID == null || responseSLAItemGUID == Guid.Empty)
                             {
-                                Service.Create(newItemInSLA);
-                            }
-                            else
-                            {
-                                _targetService.Create(newItemInSLA);
+                                statusSLAItems = false;
                             }
                         }
                         catch(Exception ex)
                         {
-                            throw;
+                            LogWarning($"SLAItem {item.Id} from SLA {newSLA} not copied: {ex.Message}");
                         }                        
                     }
 
-                    args.Result = true;
+                    args.Result = statusSLAItems;
                 },
                 PostWorkCallBack = (args) =>
                 {
@@ -710,18 +777,47 @@ namespace CloneSLAs
                             //Refresh SLAs in target
                             ExecuteMethod(GetSLAs_Target);
                             //Refresh elements of SLA in target
-                            ExecuteMethod(GetElementsOfSLA_Target);
+                            if(_targetSLASelected != null)
+                                ExecuteMethod(GetElementsOfSLA_Target);
                         }
                         else
                         {
                             //Refresh SLAs in source
                             ExecuteMethod(GetSLAs_Source);
                             //Refresh elements of SLA in source
-                            ExecuteMethod(GetElementsOfSLA_Source);
+                            if(_sourceSLASelected != null)
+                                ExecuteMethod(GetElementsOfSLA_Source);
                         }
                     }
                 }
             });
+        }
+
+        private Guid UpSert (Entity entity)
+        {
+            UpsertRequest request = new UpsertRequest()
+            {
+
+                Target = entity
+            };
+            UpsertResponse response = null;
+            if (_targetService == null)
+            {
+                response = (UpsertResponse)Service.Execute(request);
+            }
+            else
+            {
+                response = (UpsertResponse)_targetService.Execute(request);                
+            }
+
+            if (response != null && response.Target != null && response.Target.Id != Guid.Empty)
+            {
+                return response.Target.Id;
+            }
+            else
+            {
+                return Guid.Empty;
+            }
         }
 
         private void btn_CopySLA_Click(object sender, EventArgs e)
