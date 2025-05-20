@@ -204,6 +204,9 @@ namespace CloneSLAs
                             _targetSLAs.Add(entity);
                             cb_SLAs_Target.Items.Add(new SLA() { Text = entity.GetAttributeValue<string>("name"), Value = entity.Id, MainEntity = entity.FormattedValues["objecttypecode"].ToString() });
                         }
+
+                        _targetLVItemsOfSLA.Clear();
+                        lv_ElementsOfSLA_Target.Items.Clear();
                     }
                 }
             });
@@ -463,6 +466,7 @@ namespace CloneSLAs
                 LogInfo("Connection has changed to: {0}", detail.WebApplicationUrl);
                 l_environmentSourceValue.ForeColor = Color.Green;
                 Prepare_Source();
+                Prepare_Target();
             }
         }
 
@@ -481,8 +485,6 @@ namespace CloneSLAs
                 btn_CreateSLA.Enabled = false;
                 _targetConnectionDetail = (ConnectionDetail)e.NewItems[0];
                 _targetService = _targetConnectionDetail.ServiceClient;
-
-                Prepare_Target();
             }
             else
             {
@@ -866,17 +868,25 @@ namespace CloneSLAs
             CopySLAItems formCopySLA = new CopySLAItems();
             if (_targetService != null)
             {
-                formCopySLA.AddItemsToComboBox(cb_SLAs_Target.Items.Cast<SLA>().Where(k => k.MainEntity == _sourceSLASelected.FormattedValues["objecttypecode"].ToString()).ToList());
+                if(cb_SLAs_Target.SelectedItem == null)
+                    formCopySLA.AddItemsToComboBox(cb_SLAs_Target.Items.Cast<SLA>().Where(k => k.MainEntity == _sourceSLASelected.FormattedValues["objecttypecode"].ToString()).ToList());
             }
             else
             {
                 formCopySLA.AddItemsToComboBox(cb_SLAs_Source.Items.Cast<SLA>().Where(k => k.Value != _sourceSLASelected.Id && k.MainEntity == _sourceSLASelected.FormattedValues["objecttypecode"].ToString()).ToList());
             }
-           
-            var result = formCopySLA.ShowDialog();
-            if (result == DialogResult.OK)
+
+            if ((_targetService != null && cb_SLAs_Target.SelectedItem == null) || (Service != null && _targetService == null))
             {
-                ExecuteMethod(() => Copy_SLAItems("Copying SLA items...", formCopySLA.GetSLATargetSelected, true));                
+                var result = formCopySLA.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    ExecuteMethod(() => Copy_SLAItems("Copying SLA items...", formCopySLA.GetSLATargetSelected, true));
+                }
+            }
+            else if(_targetService != null)
+            {
+                ExecuteMethod(() => Copy_SLAItems("Copying SLA items...", ((SLA)cb_SLAs_Target.SelectedItem).Value, true));
             }
         }
 
