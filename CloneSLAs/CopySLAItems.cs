@@ -68,8 +68,7 @@ namespace CloneSLAs
         {
             if(cb_SLATarget.SelectedItem != null)
             {
-                var itemSelected = cb_SLATarget.SelectedItem;
-                SLATargetSelected = Guid.Parse(((DataRowView)cb_SLATarget.SelectedItem).Row.ItemArray[1].ToString());
+                SLATargetSelected = ((SLA)cb_SLATarget.SelectedItem).Value;
             }
         }
     }

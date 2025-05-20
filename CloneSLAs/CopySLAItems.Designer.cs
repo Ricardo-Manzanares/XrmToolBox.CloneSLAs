@@ -113,6 +113,7 @@
             // 
             // cb_SLATarget
             // 
+            this.cb_SLATarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_SLATarget.FormattingEnabled = true;
             this.cb_SLATarget.Location = new System.Drawing.Point(6, 19);
             this.cb_SLATarget.Name = "cb_SLATarget";

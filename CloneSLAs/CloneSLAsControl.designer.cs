@@ -267,7 +267,6 @@
             this.lv_ElementsOfSLA_Target.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lv_ElementsOfSLA_Target.CheckBoxes = true;
             this.lv_ElementsOfSLA_Target.FullRowSelect = true;
             this.lv_ElementsOfSLA_Target.HideSelection = false;
             this.lv_ElementsOfSLA_Target.Location = new System.Drawing.Point(12, 19);
@@ -358,6 +357,7 @@
             this.cb_SLAs_Target.Name = "cb_SLAs_Target";
             this.cb_SLAs_Target.Size = new System.Drawing.Size(343, 21);
             this.cb_SLAs_Target.TabIndex = 0;
+            this.cb_SLAs_Target.SelectedValueChanged += new System.EventHandler(this.cb_SLAs_Target_SelectedValueChanged);
             // 
             // p_Footer
             // 
