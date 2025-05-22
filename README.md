@@ -1,2 +1,2 @@
 # XrmToolBox.CloneSLAs
-GNU General Public License v3.0 
+Tool for cloning SLA-type records in Dynamics 365
