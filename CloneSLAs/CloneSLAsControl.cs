@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime;
@@ -48,6 +49,8 @@ namespace CloneSLAs
 
         private List<MainEntity> _mainEntitys = new List<MainEntity>();
 
+        const string DONATION_BTN_ID = "45G93PQNGEBAQ";
+
         public CloneSLAsControl()
         {
             InitializeComponent();
@@ -55,7 +58,7 @@ namespace CloneSLAs
 
         private void CloneSLAsControl_Load(object sender, EventArgs e)
         {
-            //ShowInfoNotification("This is a notification that can lead to XrmToolBox repository", new Uri("https://github.com/MscrmTools/XrmToolBox"));
+            ShowInfoNotification("If you detect any error or problem in the tool, please let us know so we can resolve it as soon as possible.", new Uri("https://github.com/Ricardo-Manzanares/XrmToolBox.CloneSLAs/issues"));
 
             // Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
@@ -110,6 +113,7 @@ namespace CloneSLAs
 
                         _sourceLVItemsOfSLA.Clear();
                         lv_ElementsOfSLA_Source.Items.Clear();
+                        bt_RefreshSource.Enabled = true;
                     }
                 }
             });
@@ -207,6 +211,7 @@ namespace CloneSLAs
 
                         _targetLVItemsOfSLA.Clear();
                         lv_ElementsOfSLA_Target.Items.Clear();
+                        bt_RefreshTarget.Enabled = true;
                     }
                 }
             });
@@ -465,6 +470,7 @@ namespace CloneSLAs
                 mySettings.LastUsedOrganizationWebappUrl = detail.WebApplicationUrl;
                 LogInfo("Connection has changed to: {0}", detail.WebApplicationUrl);
                 l_environmentSourceValue.ForeColor = Color.Green;
+               
                 Prepare_Source();
                 Prepare_Target();
             }
@@ -928,6 +934,22 @@ namespace CloneSLAs
                 btn_CopyElementsOfSLA.Enabled = false;
                 btn_CopySLA.Enabled = false;
             }
+        }
+
+        private void bt_Donate_Click(object sender, EventArgs e)
+        {
+            var url = string.Format("https://www.paypal.com/donate/?hosted_button_id={0}", DONATION_BTN_ID);
+            Process.Start(url);
+        }
+
+        private void bt_RefreshSource_Click(object sender, EventArgs e)
+        {
+            Prepare_Source();            
+        }
+
+        private void bt_RefreshTarget_Click(object sender, EventArgs e)
+        {
+            Prepare_Target();
         }
     }
 }

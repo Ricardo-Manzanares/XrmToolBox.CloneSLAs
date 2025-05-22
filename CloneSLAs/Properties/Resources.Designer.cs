@@ -83,6 +83,16 @@ namespace CloneSLAs.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap clone_slas {
+            get {
+                object obj = ResourceManager.GetObject("clone_slas", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap copy {
             get {
                 object obj = ResourceManager.GetObject("copy", resourceCulture);
@@ -96,6 +106,16 @@ namespace CloneSLAs.Properties {
         internal static System.Drawing.Bitmap copy_multiple {
             get {
                 object obj = ResourceManager.GetObject("copy-multiple", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap paypal {
+            get {
+                object obj = ResourceManager.GetObject("paypal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
