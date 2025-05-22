@@ -236,16 +236,21 @@
   <ItemGroup>
     <None Include="Resources\paypal.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rotate-left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rotate-right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clone-slas-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-      IF $(ConfigurationName) == Debug (
-      IF NOT EXIST Plugins mkdir Plugins
+    <PostBuildEvent>IF NOT EXIST Plugins mkdir Plugins
       DEL $(TargetDir)Plugins\manifest.json
       xcopy "$(TargetDir)$(TargetFileName)" "$(TargetDir)Plugins\" /Y
-      xcopy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)Plugins\" /Y
-      )
-    </PostBuildEvent>
+      xcopy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)Plugins\" /Y</PostBuildEvent>
   </PropertyGroup>
   <Import Project="packages\Microsoft.Web.WebView2.1.0.1343.22\build\Microsoft.Web.WebView2.targets" Condition="Exists('packages\Microsoft.Web.WebView2.1.0.1343.22\build\Microsoft.Web.WebView2.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CloneSLAsControl));
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.gb_SLAsSource = new System.Windows.Forms.GroupBox();
             this.tb_Description_Source = new System.Windows.Forms.TextBox();
             this.lb_Description_Source = new System.Windows.Forms.Label();
@@ -42,18 +42,6 @@
             this.p_SLAsSource = new System.Windows.Forms.Panel();
             this.p_ElementsOfSLASource = new System.Windows.Forms.Panel();
             this.p_control = new System.Windows.Forms.Panel();
-            this.p_ElementsOfSLATarget = new System.Windows.Forms.Panel();
-            this.gb_ElementsFromSLASelected_Target = new System.Windows.Forms.GroupBox();
-            this.lv_ElementsOfSLA_Target = new System.Windows.Forms.ListView();
-            this.p_SLAsTarget = new System.Windows.Forms.Panel();
-            this.gb_SLAsTarget = new System.Windows.Forms.GroupBox();
-            this.tb_Description_Target = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tb_MainEntity_Target = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cb_SLAs_Target = new System.Windows.Forms.ComboBox();
-            this.p_Footer = new System.Windows.Forms.Panel();
-            this.lb_Status = new System.Windows.Forms.Label();
             this.p_settings = new System.Windows.Forms.Panel();
             this.gb_Actions = new System.Windows.Forms.GroupBox();
             this.p_CopyElements = new System.Windows.Forms.Panel();
@@ -68,25 +56,37 @@
             this.l_environmentSource = new System.Windows.Forms.Label();
             this.l_environmentTargetValue = new System.Windows.Forms.Label();
             this.bt_SelectTarget = new System.Windows.Forms.Button();
+            this.p_ElementsOfSLATarget = new System.Windows.Forms.Panel();
+            this.gb_ElementsFromSLASelected_Target = new System.Windows.Forms.GroupBox();
+            this.lv_ElementsOfSLA_Target = new System.Windows.Forms.ListView();
+            this.p_SLAsTarget = new System.Windows.Forms.Panel();
+            this.gb_SLAsTarget = new System.Windows.Forms.GroupBox();
+            this.tb_Description_Target = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tb_MainEntity_Target = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cb_SLAs_Target = new System.Windows.Forms.ComboBox();
+            this.p_Footer = new System.Windows.Forms.Panel();
+            this.lb_Status = new System.Windows.Forms.Label();
             this.timer_Status = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.p_RefreshTarget = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.p_RefreshSource = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btn_RefreshSource = new System.Windows.Forms.Button();
+            this.btn_RefreshTarget = new System.Windows.Forms.Button();
             this.btn_CopyElementsOfSLA = new System.Windows.Forms.Button();
             this.btn_CopySLA = new System.Windows.Forms.Button();
             this.btn_CreateSLA = new System.Windows.Forms.Button();
+            this.btn_Documentation = new System.Windows.Forms.ToolStripButton();
             this.bt_Donate = new System.Windows.Forms.ToolStripButton();
-            this.bt_RefreshTarget = new System.Windows.Forms.ToolStripButton();
-            this.bt_RefreshSource = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenu.SuspendLayout();
             this.gb_SLAsSource.SuspendLayout();
             this.gb_ElementsFromSLASelected_Source.SuspendLayout();
             this.p_SLAsSource.SuspendLayout();
             this.p_ElementsOfSLASource.SuspendLayout();
             this.p_control.SuspendLayout();
-            this.p_ElementsOfSLATarget.SuspendLayout();
-            this.gb_ElementsFromSLASelected_Target.SuspendLayout();
-            this.p_SLAsTarget.SuspendLayout();
-            this.gb_SLAsTarget.SuspendLayout();
-            this.p_Footer.SuspendLayout();
             this.p_settings.SuspendLayout();
             this.gb_Actions.SuspendLayout();
             this.p_CopyElements.SuspendLayout();
@@ -94,27 +94,27 @@
             this.p_CreateSLA.SuspendLayout();
             this.gb_environments.SuspendLayout();
             this.p_environmentSources.SuspendLayout();
+            this.p_ElementsOfSLATarget.SuspendLayout();
+            this.gb_ElementsFromSLASelected_Target.SuspendLayout();
+            this.p_SLAsTarget.SuspendLayout();
+            this.gb_SLAsTarget.SuspendLayout();
+            this.p_Footer.SuspendLayout();
+            this.p_RefreshTarget.SuspendLayout();
+            this.p_RefreshSource.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMenu
             // 
             this.toolStripMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bt_RefreshSource,
-            this.toolStripSeparator,
-            this.bt_RefreshTarget,
-            this.toolStripSeparator1,
+            this.btn_Documentation,
+            this.toolStripSeparator2,
             this.bt_Donate});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
             this.toolStripMenu.Size = new System.Drawing.Size(1351, 31);
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
             // 
             // gb_SLAsSource
             // 
@@ -247,6 +247,157 @@
             this.p_control.Name = "p_control";
             this.p_control.Size = new System.Drawing.Size(1351, 664);
             this.p_control.TabIndex = 9;
+            // 
+            // p_settings
+            // 
+            this.p_settings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.p_settings.Controls.Add(this.gb_Actions);
+            this.p_settings.Controls.Add(this.gb_environments);
+            this.p_settings.Location = new System.Drawing.Point(3, 0);
+            this.p_settings.Name = "p_settings";
+            this.p_settings.Size = new System.Drawing.Size(1345, 77);
+            this.p_settings.TabIndex = 10;
+            // 
+            // gb_Actions
+            // 
+            this.gb_Actions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gb_Actions.Controls.Add(this.p_RefreshSource);
+            this.gb_Actions.Controls.Add(this.p_RefreshTarget);
+            this.gb_Actions.Controls.Add(this.p_CopyElements);
+            this.gb_Actions.Controls.Add(this.p_CopySLA);
+            this.gb_Actions.Controls.Add(this.p_CreateSLA);
+            this.gb_Actions.Location = new System.Drawing.Point(366, 3);
+            this.gb_Actions.Margin = new System.Windows.Forms.Padding(0);
+            this.gb_Actions.Name = "gb_Actions";
+            this.gb_Actions.Size = new System.Drawing.Size(979, 71);
+            this.gb_Actions.TabIndex = 6;
+            this.gb_Actions.TabStop = false;
+            this.gb_Actions.Text = "Actions";
+            // 
+            // p_CopyElements
+            // 
+            this.p_CopyElements.Controls.Add(this.btn_CopyElementsOfSLA);
+            this.p_CopyElements.Controls.Add(this.lb_btnCopyElementsOfSLA);
+            this.p_CopyElements.Location = new System.Drawing.Point(156, 12);
+            this.p_CopyElements.Name = "p_CopyElements";
+            this.p_CopyElements.Size = new System.Drawing.Size(87, 56);
+            this.p_CopyElements.TabIndex = 17;
+            // 
+            // lb_btnCopyElementsOfSLA
+            // 
+            this.lb_btnCopyElementsOfSLA.AutoSize = true;
+            this.lb_btnCopyElementsOfSLA.Location = new System.Drawing.Point(2, 40);
+            this.lb_btnCopyElementsOfSLA.Name = "lb_btnCopyElementsOfSLA";
+            this.lb_btnCopyElementsOfSLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.lb_btnCopyElementsOfSLA.Size = new System.Drawing.Size(84, 13);
+            this.lb_btnCopyElementsOfSLA.TabIndex = 10;
+            this.lb_btnCopyElementsOfSLA.Text = "Copy SLA items";
+            // 
+            // p_CopySLA
+            // 
+            this.p_CopySLA.Controls.Add(this.btn_CopySLA);
+            this.p_CopySLA.Controls.Add(this.lb_btnCopySLA);
+            this.p_CopySLA.Location = new System.Drawing.Point(81, 12);
+            this.p_CopySLA.Name = "p_CopySLA";
+            this.p_CopySLA.Size = new System.Drawing.Size(69, 56);
+            this.p_CopySLA.TabIndex = 16;
+            // 
+            // lb_btnCopySLA
+            // 
+            this.lb_btnCopySLA.AutoSize = true;
+            this.lb_btnCopySLA.Location = new System.Drawing.Point(6, 40);
+            this.lb_btnCopySLA.Name = "lb_btnCopySLA";
+            this.lb_btnCopySLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.lb_btnCopySLA.Size = new System.Drawing.Size(57, 13);
+            this.lb_btnCopySLA.TabIndex = 14;
+            this.lb_btnCopySLA.Text = "Copy SLA";
+            // 
+            // p_CreateSLA
+            // 
+            this.p_CreateSLA.Controls.Add(this.btn_CreateSLA);
+            this.p_CreateSLA.Controls.Add(this.lb_btnCreateSLA);
+            this.p_CreateSLA.Location = new System.Drawing.Point(6, 12);
+            this.p_CreateSLA.Name = "p_CreateSLA";
+            this.p_CreateSLA.Size = new System.Drawing.Size(69, 56);
+            this.p_CreateSLA.TabIndex = 15;
+            // 
+            // lb_btnCreateSLA
+            // 
+            this.lb_btnCreateSLA.AutoSize = true;
+            this.lb_btnCreateSLA.Location = new System.Drawing.Point(1, 40);
+            this.lb_btnCreateSLA.Name = "lb_btnCreateSLA";
+            this.lb_btnCreateSLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.lb_btnCreateSLA.Size = new System.Drawing.Size(64, 13);
+            this.lb_btnCreateSLA.TabIndex = 8;
+            this.lb_btnCreateSLA.Text = "Create SLA";
+            // 
+            // gb_environments
+            // 
+            this.gb_environments.Controls.Add(this.p_environmentSources);
+            this.gb_environments.Location = new System.Drawing.Point(3, 3);
+            this.gb_environments.Margin = new System.Windows.Forms.Padding(0);
+            this.gb_environments.Name = "gb_environments";
+            this.gb_environments.Size = new System.Drawing.Size(358, 71);
+            this.gb_environments.TabIndex = 0;
+            this.gb_environments.TabStop = false;
+            this.gb_environments.Text = "Environments";
+            // 
+            // p_environmentSources
+            // 
+            this.p_environmentSources.Controls.Add(this.l_environmentSourceValue);
+            this.p_environmentSources.Controls.Add(this.l_environmentSource);
+            this.p_environmentSources.Controls.Add(this.l_environmentTargetValue);
+            this.p_environmentSources.Controls.Add(this.bt_SelectTarget);
+            this.p_environmentSources.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.p_environmentSources.Location = new System.Drawing.Point(3, 16);
+            this.p_environmentSources.Name = "p_environmentSources";
+            this.p_environmentSources.Size = new System.Drawing.Size(352, 52);
+            this.p_environmentSources.TabIndex = 6;
+            // 
+            // l_environmentSourceValue
+            // 
+            this.l_environmentSourceValue.AutoSize = true;
+            this.l_environmentSourceValue.ForeColor = System.Drawing.Color.Green;
+            this.l_environmentSourceValue.Location = new System.Drawing.Point(84, 0);
+            this.l_environmentSourceValue.Name = "l_environmentSourceValue";
+            this.l_environmentSourceValue.Size = new System.Drawing.Size(10, 13);
+            this.l_environmentSourceValue.TabIndex = 6;
+            this.l_environmentSourceValue.Text = "-";
+            // 
+            // l_environmentSource
+            // 
+            this.l_environmentSource.AutoSize = true;
+            this.l_environmentSource.Location = new System.Drawing.Point(3, 0);
+            this.l_environmentSource.Name = "l_environmentSource";
+            this.l_environmentSource.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.l_environmentSource.Size = new System.Drawing.Size(44, 13);
+            this.l_environmentSource.TabIndex = 0;
+            this.l_environmentSource.Text = "Source";
+            // 
+            // l_environmentTargetValue
+            // 
+            this.l_environmentTargetValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.l_environmentTargetValue.AutoSize = true;
+            this.l_environmentTargetValue.ForeColor = System.Drawing.Color.Red;
+            this.l_environmentTargetValue.Location = new System.Drawing.Point(84, 23);
+            this.l_environmentTargetValue.Name = "l_environmentTargetValue";
+            this.l_environmentTargetValue.Size = new System.Drawing.Size(89, 13);
+            this.l_environmentTargetValue.TabIndex = 7;
+            this.l_environmentTargetValue.Text = "Pending selected";
+            // 
+            // bt_SelectTarget
+            // 
+            this.bt_SelectTarget.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.bt_SelectTarget.Location = new System.Drawing.Point(3, 18);
+            this.bt_SelectTarget.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.bt_SelectTarget.Name = "bt_SelectTarget";
+            this.bt_SelectTarget.Size = new System.Drawing.Size(75, 23);
+            this.bt_SelectTarget.TabIndex = 6;
+            this.bt_SelectTarget.Text = "Select target";
+            this.bt_SelectTarget.UseVisualStyleBackColor = true;
+            this.bt_SelectTarget.Click += new System.EventHandler(this.bt_SelectTarget_Click);
             // 
             // p_ElementsOfSLATarget
             // 
@@ -386,154 +537,70 @@
             this.lb_Status.Size = new System.Drawing.Size(0, 13);
             this.lb_Status.TabIndex = 1;
             // 
-            // p_settings
+            // toolStripSeparator2
             // 
-            this.p_settings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.p_settings.Controls.Add(this.gb_Actions);
-            this.p_settings.Controls.Add(this.gb_environments);
-            this.p_settings.Location = new System.Drawing.Point(3, 0);
-            this.p_settings.Name = "p_settings";
-            this.p_settings.Size = new System.Drawing.Size(1345, 77);
-            this.p_settings.TabIndex = 10;
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
             // 
-            // gb_Actions
+            // p_RefreshTarget
             // 
-            this.gb_Actions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gb_Actions.Controls.Add(this.p_CopyElements);
-            this.gb_Actions.Controls.Add(this.p_CopySLA);
-            this.gb_Actions.Controls.Add(this.p_CreateSLA);
-            this.gb_Actions.Location = new System.Drawing.Point(366, 3);
-            this.gb_Actions.Margin = new System.Windows.Forms.Padding(0);
-            this.gb_Actions.Name = "gb_Actions";
-            this.gb_Actions.Size = new System.Drawing.Size(979, 71);
-            this.gb_Actions.TabIndex = 6;
-            this.gb_Actions.TabStop = false;
-            this.gb_Actions.Text = "Actions";
+            this.p_RefreshTarget.Controls.Add(this.btn_RefreshTarget);
+            this.p_RefreshTarget.Controls.Add(this.label3);
+            this.p_RefreshTarget.Location = new System.Drawing.Point(889, 12);
+            this.p_RefreshTarget.Name = "p_RefreshTarget";
+            this.p_RefreshTarget.Size = new System.Drawing.Size(87, 56);
+            this.p_RefreshTarget.TabIndex = 18;
             // 
-            // p_CopyElements
+            // label3
             // 
-            this.p_CopyElements.Controls.Add(this.btn_CopyElementsOfSLA);
-            this.p_CopyElements.Controls.Add(this.lb_btnCopyElementsOfSLA);
-            this.p_CopyElements.Location = new System.Drawing.Point(156, 12);
-            this.p_CopyElements.Name = "p_CopyElements";
-            this.p_CopyElements.Size = new System.Drawing.Size(87, 56);
-            this.p_CopyElements.TabIndex = 17;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(2, 40);
+            this.label3.Name = "label3";
+            this.label3.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.label3.Size = new System.Drawing.Size(77, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Refresh target";
             // 
-            // lb_btnCopyElementsOfSLA
+            // p_RefreshSource
             // 
-            this.lb_btnCopyElementsOfSLA.AutoSize = true;
-            this.lb_btnCopyElementsOfSLA.Location = new System.Drawing.Point(2, 40);
-            this.lb_btnCopyElementsOfSLA.Name = "lb_btnCopyElementsOfSLA";
-            this.lb_btnCopyElementsOfSLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.lb_btnCopyElementsOfSLA.Size = new System.Drawing.Size(84, 13);
-            this.lb_btnCopyElementsOfSLA.TabIndex = 10;
-            this.lb_btnCopyElementsOfSLA.Text = "Copy SLA items";
+            this.p_RefreshSource.Controls.Add(this.btn_RefreshSource);
+            this.p_RefreshSource.Controls.Add(this.label4);
+            this.p_RefreshSource.Location = new System.Drawing.Point(798, 12);
+            this.p_RefreshSource.Name = "p_RefreshSource";
+            this.p_RefreshSource.Size = new System.Drawing.Size(87, 56);
+            this.p_RefreshSource.TabIndex = 19;
             // 
-            // p_CopySLA
+            // label4
             // 
-            this.p_CopySLA.Controls.Add(this.btn_CopySLA);
-            this.p_CopySLA.Controls.Add(this.lb_btnCopySLA);
-            this.p_CopySLA.Location = new System.Drawing.Point(81, 12);
-            this.p_CopySLA.Name = "p_CopySLA";
-            this.p_CopySLA.Size = new System.Drawing.Size(69, 56);
-            this.p_CopySLA.TabIndex = 16;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(2, 40);
+            this.label4.Name = "label4";
+            this.label4.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.label4.Size = new System.Drawing.Size(82, 13);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Refresh source";
             // 
-            // lb_btnCopySLA
+            // btn_RefreshSource
             // 
-            this.lb_btnCopySLA.AutoSize = true;
-            this.lb_btnCopySLA.Location = new System.Drawing.Point(6, 40);
-            this.lb_btnCopySLA.Name = "lb_btnCopySLA";
-            this.lb_btnCopySLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.lb_btnCopySLA.Size = new System.Drawing.Size(57, 13);
-            this.lb_btnCopySLA.TabIndex = 14;
-            this.lb_btnCopySLA.Text = "Copy SLA";
+            this.btn_RefreshSource.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_RefreshSource.Image = global::CloneSLAs.Properties.Resources.rotate_right;
+            this.btn_RefreshSource.Location = new System.Drawing.Point(21, 0);
+            this.btn_RefreshSource.Name = "btn_RefreshSource";
+            this.btn_RefreshSource.Size = new System.Drawing.Size(40, 40);
+            this.btn_RefreshSource.TabIndex = 9;
+            this.btn_RefreshSource.UseVisualStyleBackColor = true;
+            this.btn_RefreshSource.Click += new System.EventHandler(this.bt_RefreshSource_Click);
             // 
-            // p_CreateSLA
+            // btn_RefreshTarget
             // 
-            this.p_CreateSLA.Controls.Add(this.btn_CreateSLA);
-            this.p_CreateSLA.Controls.Add(this.lb_btnCreateSLA);
-            this.p_CreateSLA.Location = new System.Drawing.Point(6, 12);
-            this.p_CreateSLA.Name = "p_CreateSLA";
-            this.p_CreateSLA.Size = new System.Drawing.Size(69, 56);
-            this.p_CreateSLA.TabIndex = 15;
-            // 
-            // lb_btnCreateSLA
-            // 
-            this.lb_btnCreateSLA.AutoSize = true;
-            this.lb_btnCreateSLA.Location = new System.Drawing.Point(1, 40);
-            this.lb_btnCreateSLA.Name = "lb_btnCreateSLA";
-            this.lb_btnCreateSLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.lb_btnCreateSLA.Size = new System.Drawing.Size(64, 13);
-            this.lb_btnCreateSLA.TabIndex = 8;
-            this.lb_btnCreateSLA.Text = "Create SLA";
-            // 
-            // gb_environments
-            // 
-            this.gb_environments.Controls.Add(this.p_environmentSources);
-            this.gb_environments.Location = new System.Drawing.Point(3, 3);
-            this.gb_environments.Margin = new System.Windows.Forms.Padding(0);
-            this.gb_environments.Name = "gb_environments";
-            this.gb_environments.Size = new System.Drawing.Size(358, 71);
-            this.gb_environments.TabIndex = 0;
-            this.gb_environments.TabStop = false;
-            this.gb_environments.Text = "Environments";
-            // 
-            // p_environmentSources
-            // 
-            this.p_environmentSources.Controls.Add(this.l_environmentSourceValue);
-            this.p_environmentSources.Controls.Add(this.l_environmentSource);
-            this.p_environmentSources.Controls.Add(this.l_environmentTargetValue);
-            this.p_environmentSources.Controls.Add(this.bt_SelectTarget);
-            this.p_environmentSources.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.p_environmentSources.Location = new System.Drawing.Point(3, 16);
-            this.p_environmentSources.Name = "p_environmentSources";
-            this.p_environmentSources.Size = new System.Drawing.Size(352, 52);
-            this.p_environmentSources.TabIndex = 6;
-            // 
-            // l_environmentSourceValue
-            // 
-            this.l_environmentSourceValue.AutoSize = true;
-            this.l_environmentSourceValue.ForeColor = System.Drawing.Color.Green;
-            this.l_environmentSourceValue.Location = new System.Drawing.Point(84, 0);
-            this.l_environmentSourceValue.Name = "l_environmentSourceValue";
-            this.l_environmentSourceValue.Size = new System.Drawing.Size(10, 13);
-            this.l_environmentSourceValue.TabIndex = 6;
-            this.l_environmentSourceValue.Text = "-";
-            // 
-            // l_environmentSource
-            // 
-            this.l_environmentSource.AutoSize = true;
-            this.l_environmentSource.Location = new System.Drawing.Point(3, 0);
-            this.l_environmentSource.Name = "l_environmentSource";
-            this.l_environmentSource.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.l_environmentSource.Size = new System.Drawing.Size(44, 13);
-            this.l_environmentSource.TabIndex = 0;
-            this.l_environmentSource.Text = "Source";
-            // 
-            // l_environmentTargetValue
-            // 
-            this.l_environmentTargetValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.l_environmentTargetValue.AutoSize = true;
-            this.l_environmentTargetValue.ForeColor = System.Drawing.Color.Red;
-            this.l_environmentTargetValue.Location = new System.Drawing.Point(84, 23);
-            this.l_environmentTargetValue.Name = "l_environmentTargetValue";
-            this.l_environmentTargetValue.Size = new System.Drawing.Size(89, 13);
-            this.l_environmentTargetValue.TabIndex = 7;
-            this.l_environmentTargetValue.Text = "Pending selected";
-            // 
-            // bt_SelectTarget
-            // 
-            this.bt_SelectTarget.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bt_SelectTarget.Location = new System.Drawing.Point(3, 18);
-            this.bt_SelectTarget.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
-            this.bt_SelectTarget.Name = "bt_SelectTarget";
-            this.bt_SelectTarget.Size = new System.Drawing.Size(75, 23);
-            this.bt_SelectTarget.TabIndex = 6;
-            this.bt_SelectTarget.Text = "Select target";
-            this.bt_SelectTarget.UseVisualStyleBackColor = true;
-            this.bt_SelectTarget.Click += new System.EventHandler(this.bt_SelectTarget_Click);
+            this.btn_RefreshTarget.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_RefreshTarget.Image = global::CloneSLAs.Properties.Resources.rotate_left;
+            this.btn_RefreshTarget.Location = new System.Drawing.Point(21, 0);
+            this.btn_RefreshTarget.Name = "btn_RefreshTarget";
+            this.btn_RefreshTarget.Size = new System.Drawing.Size(40, 40);
+            this.btn_RefreshTarget.TabIndex = 9;
+            this.btn_RefreshTarget.UseVisualStyleBackColor = true;
+            this.btn_RefreshTarget.Click += new System.EventHandler(this.bt_RefreshTarget_Click);
             // 
             // btn_CopyElementsOfSLA
             // 
@@ -568,6 +635,16 @@
             this.btn_CreateSLA.UseVisualStyleBackColor = true;
             this.btn_CreateSLA.Click += new System.EventHandler(this.btn_CreateSLA_Click);
             // 
+            // btn_Documentation
+            // 
+            this.btn_Documentation.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btn_Documentation.Image = ((System.Drawing.Image)(resources.GetObject("btn_Documentation.Image")));
+            this.btn_Documentation.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_Documentation.Name = "btn_Documentation";
+            this.btn_Documentation.Size = new System.Drawing.Size(94, 28);
+            this.btn_Documentation.Text = "Documentation";
+            this.btn_Documentation.Click += new System.EventHandler(this.btn_Documentation_Click);
+            // 
             // bt_Donate
             // 
             this.bt_Donate.Image = global::CloneSLAs.Properties.Resources.paypal;
@@ -576,31 +653,6 @@
             this.bt_Donate.Size = new System.Drawing.Size(73, 28);
             this.bt_Donate.Text = "Donate";
             this.bt_Donate.Click += new System.EventHandler(this.bt_Donate_Click);
-            // 
-            // bt_RefreshTarget
-            // 
-            this.bt_RefreshTarget.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.bt_RefreshTarget.Enabled = false;
-            this.bt_RefreshTarget.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bt_RefreshTarget.Name = "bt_RefreshTarget";
-            this.bt_RefreshTarget.Size = new System.Drawing.Size(84, 28);
-            this.bt_RefreshTarget.Text = "Refresh target";
-            this.bt_RefreshTarget.Click += new System.EventHandler(this.bt_RefreshTarget_Click);
-            // 
-            // bt_RefreshSource
-            // 
-            this.bt_RefreshSource.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.bt_RefreshSource.Enabled = false;
-            this.bt_RefreshSource.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.bt_RefreshSource.Name = "bt_RefreshSource";
-            this.bt_RefreshSource.Size = new System.Drawing.Size(88, 28);
-            this.bt_RefreshSource.Text = "Refresh source";
-            this.bt_RefreshSource.Click += new System.EventHandler(this.bt_RefreshSource_Click);
-            // 
-            // toolStripSeparator
-            // 
-            this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(6, 31);
             // 
             // CloneSLAsControl
             // 
@@ -621,13 +673,6 @@
             this.p_SLAsSource.ResumeLayout(false);
             this.p_ElementsOfSLASource.ResumeLayout(false);
             this.p_control.ResumeLayout(false);
-            this.p_ElementsOfSLATarget.ResumeLayout(false);
-            this.gb_ElementsFromSLASelected_Target.ResumeLayout(false);
-            this.p_SLAsTarget.ResumeLayout(false);
-            this.gb_SLAsTarget.ResumeLayout(false);
-            this.gb_SLAsTarget.PerformLayout();
-            this.p_Footer.ResumeLayout(false);
-            this.p_Footer.PerformLayout();
             this.p_settings.ResumeLayout(false);
             this.gb_Actions.ResumeLayout(false);
             this.p_CopyElements.ResumeLayout(false);
@@ -639,6 +684,17 @@
             this.gb_environments.ResumeLayout(false);
             this.p_environmentSources.ResumeLayout(false);
             this.p_environmentSources.PerformLayout();
+            this.p_ElementsOfSLATarget.ResumeLayout(false);
+            this.gb_ElementsFromSLASelected_Target.ResumeLayout(false);
+            this.p_SLAsTarget.ResumeLayout(false);
+            this.gb_SLAsTarget.ResumeLayout(false);
+            this.gb_SLAsTarget.PerformLayout();
+            this.p_Footer.ResumeLayout(false);
+            this.p_Footer.PerformLayout();
+            this.p_RefreshTarget.ResumeLayout(false);
+            this.p_RefreshTarget.PerformLayout();
+            this.p_RefreshSource.ResumeLayout(false);
+            this.p_RefreshSource.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -646,7 +702,6 @@
 
         #endregion
         private System.Windows.Forms.ToolStrip toolStripMenu;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.GroupBox gb_SLAsSource;
         private System.Windows.Forms.Label lb_MainEntity_Source;
         private System.Windows.Forms.ComboBox cb_SLAs_Source;
@@ -688,9 +743,14 @@
         private System.Windows.Forms.Panel p_CopySLA;
         private System.Windows.Forms.Panel p_CreateSLA;
         private System.Windows.Forms.Timer timer_Status;
-        private System.Windows.Forms.ToolStripButton bt_RefreshTarget;
         private System.Windows.Forms.ToolStripButton bt_Donate;
-        private System.Windows.Forms.ToolStripButton bt_RefreshSource;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
+        private System.Windows.Forms.ToolStripButton btn_Documentation;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.Panel p_RefreshTarget;
+        private System.Windows.Forms.Button btn_RefreshTarget;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Panel p_RefreshSource;
+        private System.Windows.Forms.Button btn_RefreshSource;
+        private System.Windows.Forms.Label label4;
     }
 }

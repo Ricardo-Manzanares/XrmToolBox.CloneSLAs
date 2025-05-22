@@ -50,6 +50,7 @@ namespace CloneSLAs
         private List<MainEntity> _mainEntitys = new List<MainEntity>();
 
         const string DONATION_BTN_ID = "45G93PQNGEBAQ";
+        const string URI_DOCUMENTATION = "https://github.com/Ricardo-Manzanares/XrmToolBox.CloneSLAs";
 
         public CloneSLAsControl()
         {
@@ -113,7 +114,7 @@ namespace CloneSLAs
 
                         _sourceLVItemsOfSLA.Clear();
                         lv_ElementsOfSLA_Source.Items.Clear();
-                        bt_RefreshSource.Enabled = true;
+                        btn_RefreshSource.Enabled = true;
                     }
                 }
             });
@@ -211,7 +212,7 @@ namespace CloneSLAs
 
                         _targetLVItemsOfSLA.Clear();
                         lv_ElementsOfSLA_Target.Items.Clear();
-                        bt_RefreshTarget.Enabled = true;
+                        btn_RefreshTarget.Enabled = true;
                     }
                 }
             });
@@ -955,6 +956,12 @@ namespace CloneSLAs
         private void bt_RefreshTarget_Click(object sender, EventArgs e)
         {
             Prepare_Target();
+        }
+
+        private void btn_Documentation_Click(object sender, EventArgs e)
+        {
+            var url = string.Format(URI_DOCUMENTATION);
+            Process.Start(url);
         }
     }
 }

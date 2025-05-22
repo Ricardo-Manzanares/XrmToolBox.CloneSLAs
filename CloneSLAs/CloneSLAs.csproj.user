@@ -5,4 +5,9 @@
     <StartAction>Program</StartAction>
     <StartProgram>C:\Devops\GitHub\CloneSLAs\XrmToolBox.CloneSLAs\CloneSLAs\bin\Debug\XrmToolBox.exe</StartProgram>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <StartAction>Program</StartAction>
+    <StartProgram>C:\Devops\GitHub\CloneSLAs\XrmToolBox.CloneSLAs\CloneSLAs\bin\Release\XrmToolBox.exe</StartProgram>
+    <StartArguments>/overridepath:.</StartArguments>
+  </PropertyGroup>
 </Project>
