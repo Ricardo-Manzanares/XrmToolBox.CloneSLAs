@@ -348,15 +348,16 @@ namespace CloneSLAs
 
         private void PluginControl_Resize(object sender, EventArgs e)
         {
-            int h = (this.ParentForm.Height / 2) - p_settings.Height;
-            //lb_Status.Text = "Status: " + h + "-" + p_FooterRight.Location.Y;
+            int sizeHeight = (this.ParentForm.Height - p_settings.Height - p_Footer.Height) - 75;
 
-            if(_targetService != null)
+            if (_targetService != null)
             {
-                p_SLAsSource.Height = h;
-                p_ElementsOfSLASource.Height = h;
-                p_SLAsTarget.Height = h;
-                p_ElementsOfSLATarget.Height = h;
+                sizeHeight = (sizeHeight / 2) - 24;
+
+                p_SLAsSource.Height = sizeHeight;
+                p_ElementsOfSLASource.Height = sizeHeight;
+                p_SLAsTarget.Height = sizeHeight;
+                p_ElementsOfSLATarget.Height = sizeHeight;
                 p_ElementsOfSLATarget.Location = new Point(p_ElementsOfSLATarget.Location.X, p_ElementsOfSLASource.Location.Y + p_ElementsOfSLASource.Height + 10);
                 p_SLAsTarget.Visible = true;
                 p_ElementsOfSLATarget.Visible = true;
@@ -366,9 +367,9 @@ namespace CloneSLAs
             {
                 p_SLAsTarget.Visible = false;
                 p_ElementsOfSLATarget.Visible = false;
-                int sizeHeight = (this.ParentForm.Height - p_settings.Height - p_Footer.Height) - 40;
+               
                 p_SLAsSource.Height = sizeHeight;
-                p_ElementsOfSLASource.Height = (this.ParentForm.Height - p_settings.Height - p_Footer.Height) - 40;
+                p_ElementsOfSLASource.Height = sizeHeight;
             }
         }
 
@@ -680,18 +681,15 @@ namespace CloneSLAs
                         }
                         else
                         {
-                            ExecuteMethod(() => Copy_SLAItems("Copying SLA items...", result.Value, true));
+                            ExecuteMethod(() => Copy_SLAItems("Copying SLA items...", result.Value));
                         }
                     }
                 }
             });
         }
 
-        private void Copy_SLAItems(string message, Guid newSLA, Boolean process)
+        private void Copy_SLAItems(string message, Guid newSLA)
         {
-            if (!process)
-                return;
-
             WorkAsync(new WorkAsyncInfo
             {
                 Message = message,
@@ -725,12 +723,13 @@ namespace CloneSLAs
                     {
                         LogWarning($"SLA KPI not found");
                     }
+
                     //Copy items of SLA to source or target
                     foreach (var item in _sourceItemsOfSLA)
                     {
                         try
                         {
-                            Entity newItemInSLA = new Entity("slaitem", _targetService == null ? item.Id : Guid.NewGuid());
+                            Entity newItemInSLA = new Entity("slaitem", _targetService == null ? Guid.NewGuid() : item.Id);
                             newItemInSLA["slaid"] = new EntityReference("sla", newSLA);
                             newItemInSLA["name"] = item.Attributes["name"];
 
@@ -769,6 +768,15 @@ namespace CloneSLAs
                             {
                                 statusSLAItems = false;
                             }
+                            else
+                            {
+                                newItemInSLA.Id = responseSLAItemGUID;
+
+                                if (item.Attributes.Contains("sequencenumber"))
+                                    newItemInSLA["sequencenumber"] = item.Attributes["sequencenumber"];
+
+                                UpSert(newItemInSLA);
+                            }
                         }
                         catch(Exception ex)
                         {
@@ -787,8 +795,7 @@ namespace CloneSLAs
                     var result = args.Result as Boolean?;
                     if (result != null && result.Value)
                     {
-                        if(process)
-                            SetStatusMessage("SLA items copied sucess");
+                        SetStatusMessage("SLA items copied sucess");
 
                         if (_targetService != null)
                         {
@@ -799,10 +806,8 @@ namespace CloneSLAs
                             ExecuteMethod(GetSLAs_Target);
 
                             //Refresh elements of SLA in target
-                            if (_targetSLASelected != null && process == false)
+                            if (_targetSLASelected != null)
                                 ExecuteMethod(GetElementsOfSLA_Target);
-
-                            ExecuteMethod(() => Copy_SLAItems("Reorder secuence SLA items...", newSLA, message == "Reorder secuence SLA items..." ? false : true));
                         }
                         else
                         {
@@ -813,7 +818,7 @@ namespace CloneSLAs
                             ExecuteMethod(GetSLAs_Source);
 
                             //Refresh elements of SLA in source
-                            if(_sourceSLASelected != null)
+                            if (_sourceSLASelected != null)
                                 ExecuteMethod(GetElementsOfSLA_Source);
                         }
                     }
@@ -887,12 +892,12 @@ namespace CloneSLAs
                 var result = formCopySLA.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    ExecuteMethod(() => Copy_SLAItems("Copying SLA items...", formCopySLA.GetSLATargetSelected, true));
+                    ExecuteMethod(() => Copy_SLAItems("Copying SLA items...", formCopySLA.GetSLATargetSelected));
                 }
             }
             else if(_targetService != null)
             {
-                ExecuteMethod(() => Copy_SLAItems("Copying SLA items...", ((SLA)cb_SLAs_Target.SelectedItem).Value, true));
+                ExecuteMethod(() => Copy_SLAItems("Copying SLA items...", ((SLA)cb_SLAs_Target.SelectedItem).Value));
             }
         }
 

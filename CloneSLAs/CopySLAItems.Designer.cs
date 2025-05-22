@@ -75,16 +75,16 @@
             // 
             this.p_CreateSLA.Controls.Add(this.btn_CopySLA);
             this.p_CreateSLA.Controls.Add(this.lb_btnCopySLA);
-            this.p_CreateSLA.Location = new System.Drawing.Point(95, 71);
+            this.p_CreateSLA.Location = new System.Drawing.Point(82, 71);
             this.p_CreateSLA.Name = "p_CreateSLA";
-            this.p_CreateSLA.Size = new System.Drawing.Size(69, 59);
+            this.p_CreateSLA.Size = new System.Drawing.Size(88, 59);
             this.p_CreateSLA.TabIndex = 20;
             // 
             // btn_CopySLA
             // 
             this.btn_CopySLA.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_CopySLA.Image = global::CloneSLAs.Properties.Resources.accept;
-            this.btn_CopySLA.Location = new System.Drawing.Point(14, 0);
+            this.btn_CopySLA.Location = new System.Drawing.Point(21, 0);
             this.btn_CopySLA.Name = "btn_CopySLA";
             this.btn_CopySLA.Size = new System.Drawing.Size(40, 40);
             this.btn_CopySLA.TabIndex = 2;
@@ -97,9 +97,9 @@
             this.lb_btnCopySLA.Location = new System.Drawing.Point(1, 43);
             this.lb_btnCopySLA.Name = "lb_btnCopySLA";
             this.lb_btnCopySLA.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.lb_btnCopySLA.Size = new System.Drawing.Size(57, 13);
+            this.lb_btnCopySLA.Size = new System.Drawing.Size(85, 13);
             this.lb_btnCopySLA.TabIndex = 8;
-            this.lb_btnCopySLA.Text = "Copy SLA";
+            this.lb_btnCopySLA.Text = "Copy SLA Items";
             // 
             // gb_NewSLA
             // 
