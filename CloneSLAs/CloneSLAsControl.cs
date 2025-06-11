@@ -513,7 +513,9 @@ namespace CloneSLAs
                 if(_sourceSLASelected != null)
                 {
                     tb_MainEntity_Source.Text = _sourceSLASelected.FormattedValues["objecttypecode"].ToString();
-                    tb_Description_Source.Text = _sourceSLASelected.GetAttributeValue<string>("description");
+                    
+                    if(_sourceSLASelected.Contains("description"))
+                        tb_Description_Source.Text = _sourceSLASelected.GetAttributeValue<string>("description");
 
                     if (_sourceSLASelected != null)
                         ExecuteMethod(GetElementsOfSLA_Source);
@@ -863,7 +865,9 @@ namespace CloneSLAs
                 var mainEntitySelected = _mainEntitys.Where(k => k.DisplayName == _sourceSLASelected.FormattedValues["objecttypecode"].ToString()).FirstOrDefault();
                 formCreateSLA.MainEntitySelected = mainEntitySelected;
                 formCreateSLA.NewName = _sourceSLASelected.Attributes["name"] + " (copy)";  
-                formCreateSLA.NewDescription = _sourceSLASelected.Attributes["description"] != null ? _sourceSLASelected.Attributes["description"].ToString() : "";
+
+                if(_sourceSLASelected.Contains("description"))
+                    formCreateSLA.NewDescription = _sourceSLASelected.Attributes["description"] != null ? _sourceSLASelected.Attributes["description"].ToString() : "";
             }
             
             formCreateSLA.SetMainEntitys = _mainEntitys;
@@ -928,8 +932,9 @@ namespace CloneSLAs
                 _targetSLASelected = _targetSLAs.FirstOrDefault(s => s.Id == selectedSLAId);
                 if (_targetSLASelected != null)
                 {
-                    tb_MainEntity_Source.Text = _targetSLASelected.FormattedValues["objecttypecode"].ToString();
-                    tb_Description_Source.Text = _targetSLASelected.GetAttributeValue<string>("description");
+                    tb_MainEntity_Target.Text = _targetSLASelected.FormattedValues["objecttypecode"].ToString();
+                    if(_targetSLASelected.Contains("description"))
+                        tb_Description_Target.Text = _targetSLASelected.GetAttributeValue<string>("description");
 
                     if (_targetSLASelected != null)
                         ExecuteMethod(GetElementsOfSLA_Target);
