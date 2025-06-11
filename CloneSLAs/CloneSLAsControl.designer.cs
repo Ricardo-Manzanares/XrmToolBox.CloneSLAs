@@ -302,6 +302,7 @@
             // 
             // p_RefreshSource
             // 
+            this.p_RefreshSource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.p_RefreshSource.Controls.Add(this.btn_RefreshSource);
             this.p_RefreshSource.Controls.Add(this.label4);
             this.p_RefreshSource.Location = new System.Drawing.Point(798, 12);
@@ -332,6 +333,7 @@
             // 
             // p_RefreshTarget
             // 
+            this.p_RefreshTarget.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.p_RefreshTarget.Controls.Add(this.btn_RefreshTarget);
             this.p_RefreshTarget.Controls.Add(this.label3);
             this.p_RefreshTarget.Location = new System.Drawing.Point(889, 12);
