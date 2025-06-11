@@ -647,7 +647,7 @@ namespace CloneSLAs
                 Work = (worker, args) =>
                 {
                     //Create record SLA in Source  
-                    Entity newSLA = new Entity("sla");
+                    Entity newSLA = new Entity("sla");                    
                     newSLA["name"] = formCreateSLA.NewName;
                     newSLA["objecttypecode"] = formCreateSLA.MainEntitySelected.LogicalName;
                     newSLA["description"] = formCreateSLA.NewDescription;
@@ -661,6 +661,7 @@ namespace CloneSLAs
                     }
                     else
                     {
+                        newSLA["slaid"] = _sourceSLASelected.Attributes.Contains("slaid") ? _sourceSLASelected.Attributes["slaid"] : Guid.NewGuid();
                         args.Result = _targetService.Create(newSLA);
                     }
                 },
